@@ -139,7 +139,7 @@ strong { font-weight: 600; }
 .pub-item.hidden { display: none; }
 
 .pub-media {
-  flex: 0 0 100px; width: 100px; height: 100px;
+  flex: 0 0 120px; width: 120px; height: 120px;
   border-radius: var(--r); overflow: hidden;
   border: 1px solid var(--line); background: var(--bg-2);
   display: flex; align-items: center; justify-content: center;
@@ -273,7 +273,7 @@ strong { font-weight: 600; }
   .research-card.featured { grid-column: span 1; }
   .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
   .team-card.pi { grid-column: span 1; }
-  .pub-media { flex: 0 0 90px; width: 90px; height: 90px; }
+  .pub-media { flex: 0 0 120px; width: 120px; height: 120px; }
 }
 
 @media (max-width: 640px) {
