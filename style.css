@@ -35,6 +35,11 @@ strong { font-weight: 600; }
   display: flex; align-items: center; height: 60px; gap: 2rem;
 }
 .nav-logo { font-weight: 600; font-size: 15px; letter-spacing: -0.02em; color: var(--ink); }
+.nav-logo-img {
+  height: 36px;
+  width: auto;
+  display: block;
+}
 .nav-links { display: flex; gap: 0.25rem; list-style: none; margin-left: auto; }
 .nav-links a { font-size: 14px; color: var(--ink-2); padding: 6px 12px; border-radius: 6px; transition: color .15s, background .15s; }
 .nav-links a:hover { color: var(--ink); background: var(--bg-2); }
