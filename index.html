@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nexus Lab — Computational Cognition Research</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="#home" class="nav-logo">Nexus Lab</a>
+      <ul class="nav-links">
+        <li><a href="#research">Research</a></li>
+        <li><a href="#publications">Publications</a></li>
+        <li><a href="#team">Team</a></li>
+        <li><a href="#contact" class="nav-cta">Contact</a></li>
+      </ul>
+      <button class="nav-hamburger" aria-label="Toggle menu" onclick="toggleNav()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MOBILE NAV -->
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="#research"     onclick="closeNav()">Research</a>
+    <a href="#publications" onclick="closeNav()">Publications</a>
+    <a href="#team"         onclick="closeNav()">Team</a>
+    <a href="#contact"      onclick="closeNav()">Contact</a>
+  </div>
+
+  <!-- HERO -->
+  <section id="home" class="hero">
+    <div class="hero-inner">
+      <p class="hero-eyebrow">University of Sciences · Dept. of Computer Science</p>
+      <h1 class="hero-title">Where Minds<br>Meet Machines</h1>
+      <p class="hero-sub">We study how biological and artificial intelligence encode, retrieve, and reason about the world — building models that reveal as much as they predict.</p>
+      <div class="hero-actions">
+        <a href="#research" class="btn btn-primary">Our Research</a>
+        <a href="#publications" class="btn btn-ghost">Publications</a>
+      </div>
+    </div>
+    <div class="hero-decoration" aria-hidden="true">
+      <svg viewBox="0 0 420 420" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="210" cy="210" r="180" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.2"/>
+        <circle cx="210" cy="210" r="130" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.3"/>
+        <circle cx="210" cy="210" r="80"  fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.4"/>
+        <!-- nodes -->
+        <circle cx="210" cy="30"  r="5" fill="currentColor" opacity="0.6"/>
+        <circle cx="370" cy="120" r="5" fill="currentColor" opacity="0.6"/>
+        <circle cx="370" cy="300" r="5" fill="currentColor" opacity="0.6"/>
+        <circle cx="210" cy="390" r="5" fill="currentColor" opacity="0.6"/>
+        <circle cx="50"  cy="300" r="5" fill="currentColor" opacity="0.6"/>
+        <circle cx="50"  cy="120" r="5" fill="currentColor" opacity="0.6"/>
+        <circle cx="210" cy="210" r="8" fill="currentColor" opacity="0.8"/>
+        <!-- edges -->
+        <line x1="210" y1="30"  x2="210" y2="210" stroke="currentColor" stroke-width="0.5" opacity="0.3"/>
+        <line x1="370" y1="120" x2="210" y2="210" stroke="currentColor" stroke-width="0.5" opacity="0.3"/>
+        <line x1="370" y1="300" x2="210" y2="210" stroke="currentColor" stroke-width="0.5" opacity="0.3"/>
+        <line x1="210" y1="390" x2="210" y2="210" stroke="currentColor" stroke-width="0.5" opacity="0.3"/>
+        <line x1="50"  y1="300" x2="210" y2="210" stroke="currentColor" stroke-width="0.5" opacity="0.3"/>
+        <line x1="50"  y1="120" x2="210" y2="210" stroke="currentColor" stroke-width="0.5" opacity="0.3"/>
+        <line x1="210" y1="30"  x2="370" y2="120" stroke="currentColor" stroke-width="0.3" opacity="0.2"/>
+        <line x1="370" y1="120" x2="370" y2="300" stroke="currentColor" stroke-width="0.3" opacity="0.2"/>
+        <line x1="370" y1="300" x2="210" y2="390" stroke="currentColor" stroke-width="0.3" opacity="0.2"/>
+        <line x1="210" y1="390" x2="50"  y2="300" stroke="currentColor" stroke-width="0.3" opacity="0.2"/>
+        <line x1="50"  y1="300" x2="50"  y2="120" stroke="currentColor" stroke-width="0.3" opacity="0.2"/>
+        <line x1="50"  y1="120" x2="210" y2="30"  stroke="currentColor" stroke-width="0.3" opacity="0.2"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stat"><span class="stat-n">12</span><span class="stat-l">Lab Members</span></div>
+    <div class="stat"><span class="stat-n">80+</span><span class="stat-l">Publications</span></div>
+    <div class="stat"><span class="stat-n">$4.2M</span><span class="stat-l">Active Funding</span></div>
+    <div class="stat"><span class="stat-n">2014</span><span class="stat-l">Founded</span></div>
+  </div>
+
+  <!-- RESEARCH -->
+  <section id="research" class="section">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow">What we study</p>
+        <h2 class="section-title">Research Areas</h2>
+        <p class="section-desc">Our work sits at the intersection of cognitive science, machine learning, and neuroscience. We ask questions that neither field can answer alone.</p>
+      </div>
+
+      <div class="research-grid">
+
+        <div class="research-card featured">
+          <div class="rc-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="16" cy="16" r="6" stroke="currentColor" stroke-width="1.2"/>
+              <path d="M16 4v4M16 24v4M4 16h4M24 16h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              <path d="M7.76 7.76l2.83 2.83M21.41 21.41l2.83 2.83M7.76 24.24l2.83-2.83M21.41 10.59l2.83-2.83" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3>Memory &amp; Representation</h3>
+          <p>We probe how episodic and semantic memories are structured in the hippocampal-neocortical circuit, and how analogous representations emerge in transformer-based models.</p>
+          <a href="#publications" class="rc-link">View related papers →</a>
+        </div>
+
+        <div class="research-card">
+          <div class="rc-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 20l7-7 5 5 8-10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="26" cy="8" r="2" stroke="currentColor" stroke-width="1.2"/>
+            </svg>
+          </div>
+          <h3>Causal Reasoning</h3>
+          <p>How do humans and models distinguish correlation from causation? We design experiments and benchmarks to probe causal inference under uncertainty.</p>
+          <a href="#publications" class="rc-link">View related papers →</a>
+        </div>
+
+        <div class="research-card">
+          <div class="rc-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="4" y="12" width="8" height="16" rx="2" stroke="currentColor" stroke-width="1.2"/>
+              <rect x="14" y="6" width="8" height="22" rx="2" stroke="currentColor" stroke-width="1.2"/>
+              <rect x="24" y="16" width="4" height="12" rx="2" stroke="currentColor" stroke-width="1.2"/>
+            </svg>
+          </div>
+          <h3>Cognitive Benchmarking</h3>
+          <p>We build rigorous evaluation suites that test reasoning, generalization, and robustness — exposing where current AI systems diverge from human cognition.</p>
+          <a href="#publications" class="rc-link">View related papers →</a>
+        </div>
+
+        <div class="research-card">
+          <div class="rc-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 10h4v12H6zM14 6h4v16h-4zM22 14h4v8h-4z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+              <path d="M4 28h24" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3>Language &amp; Grounding</h3>
+          <p>Language is not a symbol system — it is grounded in perception and action. We study how meaning is anchored in the world, in both children and large language models.</p>
+          <a href="#publications" class="rc-link">View related papers →</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PUBLICATIONS -->
+  <section id="publications" class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow">Our work</p>
+        <h2 class="section-title">Recent Publications</h2>
+      </div>
+
+      <div class="pub-filters">
+        <button class="pf-btn active" onclick="filterPubs('all', this)">All</button>
+        <button class="pf-btn" onclick="filterPubs('memory', this)">Memory</button>
+        <button class="pf-btn" onclick="filterPubs('reasoning', this)">Reasoning</button>
+        <button class="pf-btn" onclick="filterPubs('language', this)">Language</button>
+      </div>
+
+      <div class="pub-list" id="pub-list">
+
+        <article class="pub-item" data-tag="memory">
+          <div class="pub-meta">
+            <span class="pub-tag">Memory</span>
+            <span class="pub-year">2024</span>
+          </div>
+          <h3 class="pub-title">Replay Without Recall: Hippocampal Consolidation in Deep Sequence Models</h3>
+          <p class="pub-authors">Chen A., Martinez R., Obi E., <strong>Kim S.</strong></p>
+          <p class="pub-venue">Nature Neuroscience · 2024</p>
+          <div class="pub-links">
+            <a href="#" class="pub-link">PDF</a>
+            <a href="#" class="pub-link">Code</a>
+            <a href="#" class="pub-link">Abstract</a>
+          </div>
+        </article>
+
+        <article class="pub-item" data-tag="reasoning">
+          <div class="pub-meta">
+            <span class="pub-tag">Reasoning</span>
+            <span class="pub-year">2024</span>
+          </div>
+          <h3 class="pub-title">CausalBench: A Diagnostic Suite for Interventional Reasoning in LLMs</h3>
+          <p class="pub-authors"><strong>Kim S.</strong>, Obi E., Patel N.</p>
+          <p class="pub-venue">NeurIPS 2024</p>
+          <div class="pub-links">
+            <a href="#" class="pub-link">PDF</a>
+            <a href="#" class="pub-link">Dataset</a>
+            <a href="#" class="pub-link">Abstract</a>
+          </div>
+        </article>
+
+        <article class="pub-item" data-tag="language">
+          <div class="pub-meta">
+            <span class="pub-tag">Language</span>
+            <span class="pub-year">2023</span>
+          </div>
+          <h3 class="pub-title">Grounded Token Representations: Evidence from Cross-modal Alignment Tasks</h3>
+          <p class="pub-authors">Patel N., Chen A., <strong>Kim S.</strong></p>
+          <p class="pub-venue">ACL 2023</p>
+          <div class="pub-links">
+            <a href="#" class="pub-link">PDF</a>
+            <a href="#" class="pub-link">Abstract</a>
+          </div>
+        </article>
+
+        <article class="pub-item" data-tag="memory">
+          <div class="pub-meta">
+            <span class="pub-tag">Memory</span>
+            <span class="pub-year">2023</span>
+          </div>
+          <h3 class="pub-title">Schema Induction in Humans and Transformers: A Comparative Study</h3>
+          <p class="pub-authors">Martinez R., <strong>Kim S.</strong>, Obi E.</p>
+          <p class="pub-venue">Cognitive Science · 2023</p>
+          <div class="pub-links">
+            <a href="#" class="pub-link">PDF</a>
+            <a href="#" class="pub-link">Code</a>
+            <a href="#" class="pub-link">Abstract</a>
+          </div>
+        </article>
+
+        <article class="pub-item" data-tag="reasoning">
+          <div class="pub-meta">
+            <span class="pub-tag">Reasoning</span>
+            <span class="pub-year">2023</span>
+          </div>
+          <h3 class="pub-title">Counterfactual Blindspots in Chain-of-Thought Prompting</h3>
+          <p class="pub-authors">Obi E., Patel N., <strong>Kim S.</strong></p>
+          <p class="pub-venue">ICLR 2023</p>
+          <div class="pub-links">
+            <a href="#" class="pub-link">PDF</a>
+            <a href="#" class="pub-link">Abstract</a>
+          </div>
+        </article>
+
+        <article class="pub-item" data-tag="language">
+          <div class="pub-meta">
+            <span class="pub-tag">Language</span>
+            <span class="pub-year">2022</span>
+          </div>
+          <h3 class="pub-title">Metaphor Comprehension as Analogical Structure Mapping in Neural Systems</h3>
+          <p class="pub-authors">Chen A., <strong>Kim S.</strong></p>
+          <p class="pub-venue">Psychological Review · 2022</p>
+          <div class="pub-links">
+            <a href="#" class="pub-link">PDF</a>
+            <a href="#" class="pub-link">Abstract</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section id="team" class="section">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow">The people</p>
+        <h2 class="section-title">Our Team</h2>
+      </div>
+
+      <div class="team-grid">
+
+        <div class="team-card pi">
+          <div class="team-avatar" style="--hue: 240">SK</div>
+          <div class="team-info">
+            <h3>Prof. Soo-Jin Kim</h3>
+            <p class="team-role">Principal Investigator</p>
+            <p class="team-bio">Soo-Jin studies the computational basis of human memory and its failure modes. Before founding Nexus Lab, she was a postdoctoral fellow at MIT BCS and holds a PhD from Stanford.</p>
+            <div class="team-links">
+              <a href="#" class="tl">Scholar</a>
+              <a href="#" class="tl">CV</a>
+              <a href="mailto:s.kim@nexuslab.edu" class="tl">Email</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="team-card">
+          <div class="team-avatar" style="--hue: 160">AC</div>
+          <div class="team-info">
+            <h3>Amara Chen</h3>
+            <p class="team-role">PhD Candidate · 4th Year</p>
+            <p class="team-bio">Amara focuses on cross-modal grounding and the relationship between language and perception in both humans and neural models.</p>
+            <div class="team-links"><a href="#" class="tl">Scholar</a><a href="#" class="tl">Website</a></div>
+          </div>
+        </div>
+
+        <div class="team-card">
+          <div class="team-avatar" style="--hue: 30">RM</div>
+          <div class="team-info">
+            <h3>Rafael Martinez</h3>
+            <p class="team-role">PhD Candidate · 3rd Year</p>
+            <p class="team-bio">Rafael investigates schema learning and analogical transfer, with a particular interest in how prior knowledge shapes episodic encoding.</p>
+            <div class="team-links"><a href="#" class="tl">Scholar</a><a href="#" class="tl">GitHub</a></div>
+          </div>
+        </div>
+
+        <div class="team-card">
+          <div class="team-avatar" style="--hue: 290">EO</div>
+          <div class="team-info">
+            <h3>Emeka Obi</h3>
+            <p class="team-role">PhD Candidate · 2nd Year</p>
+            <p class="team-bio">Emeka works on causal reasoning benchmarks and how LLMs respond to interventional vs. observational queries.</p>
+            <div class="team-links"><a href="#" class="tl">Scholar</a><a href="#" class="tl">GitHub</a></div>
+          </div>
+        </div>
+
+        <div class="team-card">
+          <div class="team-avatar" style="--hue: 5">NP</div>
+          <div class="team-info">
+            <h3>Neha Patel</h3>
+            <p class="team-role">Postdoctoral Researcher</p>
+            <p class="team-bio">Neha studies the representation of abstract concepts, focusing on how meaning becomes detached from perceptual grounding as models scale.</p>
+            <div class="team-links"><a href="#" class="tl">Scholar</a><a href="#" class="tl">CV</a></div>
+          </div>
+        </div>
+
+        <div class="team-card joining">
+          <div class="team-avatar joining-av">+</div>
+          <div class="team-info">
+            <h3>We're hiring</h3>
+            <p class="team-role">PhD · Postdoc · Visiting</p>
+            <p class="team-bio">We welcome applications from candidates with backgrounds in ML, cognitive science, linguistics, or neuroscience. Deadline: December 1.</p>
+            <div class="team-links"><a href="#contact" class="tl">Apply</a></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section section-contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-left">
+          <p class="section-eyebrow">Get in touch</p>
+          <h2 class="section-title">Contact Us</h2>
+          <p>We're always open to collaboration, media inquiries, and prospective student applications.</p>
+          <div class="contact-info">
+            <div class="ci-item">
+              <span class="ci-label">Email</span>
+              <a href="mailto:nexuslab@univ.edu">nexuslab@univ.edu</a>
+            </div>
+            <div class="ci-item">
+              <span class="ci-label">Location</span>
+              <span>Gates–Hillman Complex, Room 5408<br>Pittsburgh, PA 15213</span>
+            </div>
+            <div class="ci-item">
+              <span class="ci-label">Office hours</span>
+              <span>Mon &amp; Wed 2–4 pm ET</span>
+            </div>
+          </div>
+        </div>
+        <form class="contact-form" onsubmit="handleForm(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" placeholder="Your name" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" placeholder="you@example.com" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <select id="subject">
+              <option value="">Select a topic…</option>
+              <option>Collaboration</option>
+              <option>PhD Application</option>
+              <option>Postdoc Application</option>
+              <option>Media Inquiry</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" rows="5" placeholder="Tell us about your inquiry…" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">Send Message</button>
+          <p class="form-notice" id="form-notice" style="display:none"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span class="footer-logo">Nexus Lab</span>
+      <span class="footer-copy">© 2025 Nexus Lab · University of Sciences</span>
+      <div class="footer-links">
+        <a href="#">Twitter/X</a>
+        <a href="#">GitHub</a>
+        <a href="#">Google Scholar</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
