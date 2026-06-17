@@ -73,7 +73,7 @@ strong { font-weight: 600; }
 .hero-eyebrow { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); font-weight: 500; margin-bottom: 1.25rem; }
 .hero-title {
   font-family: 'Lora', Georgia, serif;
-  font-size: clamp(2.8rem, 6vw, 4.5rem);
+  font-size: clamp(2rem, 4vw, 3rem);
   font-weight: 600; line-height: 1.1;
   letter-spacing: -0.02em; color: var(--ink);
   margin-bottom: 1.5rem;
