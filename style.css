@@ -148,7 +148,7 @@ strong { font-weight: 600; }
 .pub-item.hidden { display: none; }
 
 .pub-media {
-  flex: 0 0 250px; width: 250px; height: 250px;
+  flex: 0 0 250px; width: 250px; height: 200px;
   border-radius: var(--r); overflow: hidden;
   border: 1px solid var(--line); background: var(--bg-2);
   display: flex; align-items: center; justify-content: center;
@@ -282,7 +282,7 @@ strong { font-weight: 600; }
   .research-card.featured { grid-column: span 1; }
   .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
   .team-card.pi { grid-column: span 1; }
-  .pub-media { flex: 0 0 250px; width: 250px; height: 250px; }
+  .pub-media { flex: 0 0 250px; width: 250px; height: 200px; }
 }
 
 @media (max-width: 640px) {
@@ -292,5 +292,5 @@ strong { font-weight: 600; }
   .form-row { grid-template-columns: 1fr; }
   .team-card { flex-direction: column; }
   .pub-item { flex-direction: column; }
-  .pub-media { width: 100%; height: 200px; flex: none; }
+  .pub-media { width: 100%; height: 180px; flex: none; }
 }
