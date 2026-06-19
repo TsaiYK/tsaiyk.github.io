@@ -1,3 +1,10 @@
+// News toggle
+function toggleNews(btn) {
+  const detail = btn.nextElementSibling;
+  const isOpen = detail.classList.toggle('open');
+  btn.textContent = isOpen ? 'Read less ↑' : 'Read more ↓';
+}
+
 // Nav toggle
 function toggleNav() {
   document.getElementById('mobile-nav').classList.toggle('open');
