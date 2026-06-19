@@ -17,6 +17,7 @@
     <div class="nav-inner">
       <a href="#home" class="nav-logo">DISO Lab</a>
       <ul class="nav-links">
+        <li><a href="#news">News</a></li>
         <li><a href="#research">Research</a></li>
         <li><a href="#publications">Publications</a></li>
         <li><a href="#team">Team</a></li>
@@ -31,6 +32,7 @@
 
   <!-- MOBILE NAV -->
   <div class="mobile-nav" id="mobile-nav">
+    <a href="#news"         onclick="closeNav()">News</a>
     <a href="#research"     onclick="closeNav()">Research</a>
     <a href="#publications" onclick="closeNav()">Publications</a>
     <a href="#team"         onclick="closeNav()">Team</a>
@@ -126,6 +128,31 @@
     We are currently hiring Ph.D. students in the Mechanical and Manufacturing Engineering at Texas State University!
   </div>
 
+  <!-- NEWS -->
+  <section id="news" class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow">Latest updates</p>
+        <h2 class="section-title">News</h2>
+      </div>
+ 
+      <div class="news-list">
+ 
+        <div class="news-item">
+          <div class="news-date">06 / 2026</div>
+          <div class="news-body">
+            <p class="news-headline">Presented our latest work on Bayesian co-design for AM at NAMRC54, State College, PA, USA.</p>
+            <button class="news-toggle" onclick="toggleNews(this)">Read more ↓</button>
+            <p class="news-detail">
+              Dr. Tsai presented the paper <em>"UNiCO-AM: Uncertainty-aware Neural Co-design for Additive Manufacturing via an Attention-based Spatio-Temporal Neural Operator and Bayesian Optimization"</em> at the North American Manufacturing Research Conference (NAMRC) 54. This work introduces a novel co-design framework for additive manufacturing that jointly optimizes process parameters and part geometry under uncertainty. The approach combines an attention-based spatio-temporal neural operator — which efficiently learns the complex thermal and mechanical dynamics of the AM process — with Bayesian optimization to navigate the high-dimensional design space in a data-efficient manner. The result is a system capable of making uncertainty-aware decisions in real time, reducing trial-and-error in AM workflows and improving final part quality.
+            </p>
+          </div>
+        </div>
+ 
+      </div>
+    </div>
+  </section>
+          
   <!-- RESEARCH -->
   <section id="research" class="section">
     <div class="container">
