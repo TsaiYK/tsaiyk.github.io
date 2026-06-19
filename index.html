@@ -54,32 +54,69 @@
         — Leonardo da Vinci (1452–1519)
       </blockquote>
     </div>
-    <div class="hero-decoration" aria-hidden="true">
+      <div class="hero-decoration" aria-hidden="true">
       <svg viewBox="0 0 420 420" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="210" cy="210" r="180" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.2"/>
-        <circle cx="210" cy="210" r="130" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.3"/>
-        <circle cx="210" cy="210" r="80"  fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.4"/>
-        <!-- nodes -->
-        <circle cx="210" cy="30"  r="5" fill="currentColor" opacity="0.6"/>
-        <circle cx="370" cy="120" r="5" fill="currentColor" opacity="0.6"/>
-        <circle cx="370" cy="300" r="5" fill="currentColor" opacity="0.6"/>
-        <circle cx="210" cy="390" r="5" fill="currentColor" opacity="0.6"/>
-        <circle cx="50"  cy="300" r="5" fill="currentColor" opacity="0.6"/>
-        <circle cx="50"  cy="120" r="5" fill="currentColor" opacity="0.6"/>
-        <circle cx="210" cy="210" r="8" fill="currentColor" opacity="0.8"/>
-        <!-- edges -->
-        <line x1="210" y1="30"  x2="210" y2="210" stroke="currentColor" stroke-width="0.5" opacity="0.3"/>
-        <line x1="370" y1="120" x2="210" y2="210" stroke="currentColor" stroke-width="0.5" opacity="0.3"/>
-        <line x1="370" y1="300" x2="210" y2="210" stroke="currentColor" stroke-width="0.5" opacity="0.3"/>
-        <line x1="210" y1="390" x2="210" y2="210" stroke="currentColor" stroke-width="0.5" opacity="0.3"/>
-        <line x1="50"  y1="300" x2="210" y2="210" stroke="currentColor" stroke-width="0.5" opacity="0.3"/>
-        <line x1="50"  y1="120" x2="210" y2="210" stroke="currentColor" stroke-width="0.5" opacity="0.3"/>
-        <line x1="210" y1="30"  x2="370" y2="120" stroke="currentColor" stroke-width="0.3" opacity="0.2"/>
-        <line x1="370" y1="120" x2="370" y2="300" stroke="currentColor" stroke-width="0.3" opacity="0.2"/>
-        <line x1="370" y1="300" x2="210" y2="390" stroke="currentColor" stroke-width="0.3" opacity="0.2"/>
-        <line x1="210" y1="390" x2="50"  y2="300" stroke="currentColor" stroke-width="0.3" opacity="0.2"/>
-        <line x1="50"  y1="300" x2="50"  y2="120" stroke="currentColor" stroke-width="0.3" opacity="0.2"/>
-        <line x1="50"  y1="120" x2="210" y2="30"  stroke="currentColor" stroke-width="0.3" opacity="0.2"/>
+    
+        <!-- Outer rings -->
+        <circle cx="210" cy="210" r="180" fill="none" stroke="#3d5a80" stroke-width="1" opacity="0.2"/>
+        <circle cx="210" cy="210" r="140" fill="none" stroke="#3d5a80" stroke-width="1" opacity="0.25"/>
+        <circle cx="210" cy="210" r="100" fill="none" stroke="#3d5a80" stroke-width="1" opacity="0.3"/>
+    
+        <!-- Outer hexagon -->
+        <polygon points="210,70 330,140 330,280 210,350 90,280 90,140"
+                 fill="none" stroke="#2c4260" stroke-width="1.5" opacity="0.7"/>
+    
+        <!-- Inner hexagon -->
+        <polygon points="210,120 285,162 285,248 210,290 135,248 135,162"
+                 fill="none" stroke="#6b8cad" stroke-width="1" opacity="0.6"/>
+    
+        <!-- Spokes: outer hex vertices to center -->
+        <line x1="210" y1="70"  x2="210" y2="210" stroke="#2c4260" stroke-width="1" opacity="0.5"/>
+        <line x1="330" y1="140" x2="210" y2="210" stroke="#2c4260" stroke-width="1" opacity="0.5"/>
+        <line x1="330" y1="280" x2="210" y2="210" stroke="#2c4260" stroke-width="1" opacity="0.5"/>
+        <line x1="210" y1="350" x2="210" y2="210" stroke="#2c4260" stroke-width="1" opacity="0.5"/>
+        <line x1="90"  y1="280" x2="210" y2="210" stroke="#2c4260" stroke-width="1" opacity="0.5"/>
+        <line x1="90"  y1="140" x2="210" y2="210" stroke="#2c4260" stroke-width="1" opacity="0.5"/>
+    
+        <!-- Cross-spokes: inner hex vertices to center -->
+        <line x1="210" y1="120" x2="210" y2="210" stroke="#6b8cad" stroke-width="0.8" opacity="0.4"/>
+        <line x1="285" y1="162" x2="210" y2="210" stroke="#6b8cad" stroke-width="0.8" opacity="0.4"/>
+        <line x1="285" y1="248" x2="210" y2="210" stroke="#6b8cad" stroke-width="0.8" opacity="0.4"/>
+        <line x1="210" y1="290" x2="210" y2="210" stroke="#6b8cad" stroke-width="0.8" opacity="0.4"/>
+        <line x1="135" y1="248" x2="210" y2="210" stroke="#6b8cad" stroke-width="0.8" opacity="0.4"/>
+        <line x1="135" y1="162" x2="210" y2="210" stroke="#6b8cad" stroke-width="0.8" opacity="0.4"/>
+    
+        <!-- Star of David — two triangles -->
+        <!-- Triangle pointing up (light fill) -->
+        <polygon points="210,120 285,248 135,248"
+                 fill="#3d5a80" opacity="0.12"
+                 stroke="#3d5a80" stroke-width="1" />
+        <!-- Triangle pointing down (lighter fill) -->
+        <polygon points="210,290 285,162 135,162"
+                 fill="#6b8cad" opacity="0.10"
+                 stroke="#6b8cad" stroke-width="1" />
+    
+        <!-- Outer hex vertex nodes (dark) -->
+        <circle cx="210" cy="70"  r="5.5" fill="#2c4260"/>
+        <circle cx="330" cy="140" r="5.5" fill="#2c4260"/>
+        <circle cx="330" cy="280" r="5.5" fill="#2c4260"/>
+        <circle cx="210" cy="350" r="5.5" fill="#2c4260"/>
+        <circle cx="90"  cy="280" r="5.5" fill="#2c4260"/>
+        <circle cx="90"  cy="140" r="5.5" fill="#2c4260"/>
+    
+        <!-- Inner hex vertex nodes (light) -->
+        <circle cx="210" cy="120" r="4" fill="#6b8cad"/>
+        <circle cx="285" cy="162" r="4" fill="#6b8cad"/>
+        <circle cx="285" cy="248" r="4" fill="#6b8cad"/>
+        <circle cx="210" cy="290" r="4" fill="#6b8cad"/>
+        <circle cx="135" cy="248" r="4" fill="#6b8cad"/>
+        <circle cx="135" cy="162" r="4" fill="#6b8cad"/>
+    
+        <!-- Center bullseye -->
+        <circle cx="210" cy="210" r="22" fill="#2c4260"/>
+        <circle cx="210" cy="210" r="14" fill="#eef1f5"/>
+        <circle cx="210" cy="210" r="6"  fill="#2c4260"/>
+    
       </svg>
     </div>
   </section>
