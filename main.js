@@ -26,7 +26,8 @@ function filterPubs(tag, btn) {
   document.querySelectorAll('.pf-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   document.querySelectorAll('.pub-item').forEach(item => {
-    item.classList.toggle('hidden', tag !== 'all' && item.dataset.tag !== tag);
+    const tags = item.dataset.tag.split(' ');
+    item.classList.toggle('hidden', tag !== 'all' && !tags.includes(tag));
   });
 }
 
