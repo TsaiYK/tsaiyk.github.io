@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Control Co-Design | DISO Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/png" href="images/diso_lab_logo.png" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">DISO Lab</a>
+      <ul class="nav-links">
+        <li><a href="index.html#news">News</a></li>
+        <li><a href="index.html#research" class="active">Research</a></li>
+        <li><a href="index.html#publications">Publications</a></li>
+        <li><a href="index.html#team">Team</a></li>
+        <li><a href="index.html#join">Join Us</a></li>
+        <li><a href="index.html#contact" class="nav-cta">Contact</a></li>
+      </ul>
+      <button class="nav-hamburger" aria-label="Toggle menu" onclick="toggleNav()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MOBILE NAV -->
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="index.html#news"         onclick="closeNav()">News</a>
+    <a href="index.html#research"     onclick="closeNav()">Research</a>
+    <a href="index.html#publications" onclick="closeNav()">Publications</a>
+    <a href="index.html#team"         onclick="closeNav()">Team</a>
+    <a href="index.html#join"         onclick="closeNav()">Join Us</a>
+    <a href="index.html#contact"      onclick="closeNav()">Contact</a>
+  </div>
+
+  <!-- HEADER -->
+  <section class="section">
+    <div class="container">
+      <a href="index.html#research" class="btn btn-ghost" style="margin-bottom: 2rem; display: inline-flex;">← Back to Research Areas</a>
+      <div class="section-header">
+        <p class="section-eyebrow">Research Area</p>
+        <h2 class="section-title">Control Co-Design for<br>Intelligent Autonomous Systems</h2>
+        <p class="section-desc">We advance control co-design (CCD) methodologies that integrate reinforcement learning (RL) and model predictive control (MPC) to jointly optimize physical design and control policies for autonomous systems operating in dynamic and uncertain environments.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- OVERVIEW -->
+  <section class="section section-alt">
+    <div class="container">
+      <div style="max-width: 860px; margin: 0 auto;">
+        <h3 style="font-family: 'Lora', serif; font-size: 1.5rem; color: var(--ink); margin-bottom: 1.25rem;">Overview</h3>
+        <p style="color: var(--ink-2); line-height: 1.8; margin-bottom: 1rem;">
+          Traditional engineering design separates physical system design from controller design, solving each sequentially. This sequential approach is inherently suboptimal because a system's physical structure fundamentally shapes what controllers can achieve, and vice versa. Control Co-Design (CCD) breaks this barrier by solving both problems simultaneously, unlocking performance gains that neither approach can achieve alone.
+        </p>
+        <p style="color: var(--ink-2); line-height: 1.8; margin-bottom: 1rem;">
+          Our research develops CCD formulations that are scalable, robust, and adaptable. We integrate deep reinforcement learning to handle high-dimensional, nonlinear design-control spaces, and tube-based Model Predictive Control to guarantee constraint satisfaction under bounded disturbances. We also develop parametric and multi-objective formulations that yield a rich set of Pareto-optimal design-control tradeoffs.
+        </p>
+        <p style="color: var(--ink-2); line-height: 1.8;">
+          Application domains include active suspension systems, robotics, aerospace, and smart material structures. A key focus is enabling multi-generation CCD — where digital twins accumulate operational data to improve the joint design and policy in successive system iterations.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- KEY THEMES -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title" style="font-size: 1.6rem;">Key Research Themes</h2>
+      </div>
+      <div class="research-grid">
+        <div class="research-card">
+          <div class="rc-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="16" cy="16" r="5" stroke="currentColor" stroke-width="1.2"/>
+              <path d="M16 4v5M16 23v5M4 16h5M23 16h5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              <path d="M7.5 7.5l3.5 3.5M21 21l3.5 3.5M7.5 24.5l3.5-3.5M21 11l3.5-3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3>Simultaneous & Nested CCD Formulations</h3>
+          <p>We develop both simultaneous formulations (solving design and control jointly) and nested formulations (iterating between the two), identifying when each is preferable and how to bridge them efficiently.</p>
+        </div>
+        <div class="research-card">
+          <div class="rc-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="3" y="3" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.2"/>
+              <rect x="18" y="3" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.2"/>
+              <rect x="3" y="18" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.2"/>
+              <rect x="18" y="18" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.2"/>
+              <path d="M14 8.5h4M14 23.5h4M8.5 14v4M23.5 14v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3>RL-Based CCD for Nonlinear Systems</h3>
+          <p>We leverage deep reinforcement learning to jointly optimize design parameters and control policies for complex, nonlinear systems with high-dimensional state-action spaces, without requiring explicit dynamic models.</p>
+        </div>
+        <div class="research-card">
+          <div class="rc-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 24l6-8 5 4 5-10 8 10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="10" cy="10" r="3" stroke="currentColor" stroke-width="1.2"/>
+              <circle cx="22" cy="7" r="3" stroke="currentColor" stroke-width="1.2"/>
+              <path d="M13 10h6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3>Robust CCD with Tube-MPC</h3>
+          <p>We extend CCD to uncertain environments using tube-based MPC, ensuring that the jointly optimized system remains safe and performant even under bounded disturbances and model mismatch.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RELATED PUBLICATIONS -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow">Selected work</p>
+        <h2 class="section-title" style="font-size: 1.6rem;">Related Publications</h2>
+      </div>
+
+      <div class="pub-list">
+
+        <article class="pub-item" data-tag="ccd">
+          <div class="pub-media">
+            <img src="images/FullVehicleActiveSuspension.png" alt="Full vehicle active suspension system" />
+          </div>
+          <div class="pub-body">
+            <div class="pub-meta">
+              <span class="pub-tag">CCD</span>
+              <span class="pub-year">2026</span>
+            </div>
+            <h3 class="pub-title">Reinforcement learning-based control co-design of digital twin-enabled full-vehicle active suspension systems</h3>
+            <p class="pub-authors"><strong>Ying-Kuan Tsai</strong>, Yi-Ping Chen, Vispi Karkaria, Wei Chen</p>
+            <p class="pub-venue">Structural and Multidisciplinary Optimization · April 2026</p>
+            <div class="pub-links">
+              <a href="https://link.springer.com/article/10.1007/s00158-026-04304-y" target="_blank" class="pub-link">Paper</a>
+              <a href="https://github.com/TsaiYK/ControlCoDesign_DigitalTwin_RL_FullVehicleActiveSuspension" target="_blank" class="pub-link">Code</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="pub-item" data-tag="ccd">
+          <div class="pub-media">
+            <img src="images/DT_CCD_RL_Animation_advertise.gif" alt="Digital Twin CCD RL animation" />
+          </div>
+          <div class="pub-body">
+            <div class="pub-meta">
+              <span class="pub-tag">CCD</span>
+              <span class="pub-year">2026</span>
+            </div>
+            <h3 class="pub-title">Digital Twin-Enabled Multi-Generation Control Co-Design with Deep Reinforcement Learning</h3>
+            <p class="pub-authors"><strong>Ying-Kuan Tsai</strong>, Vispi Karkaria, Yi-Ping Chen, Wei Chen</p>
+            <p class="pub-venue">Journal of Mechanical Design · Accepted 2026</p>
+            <div class="pub-links">
+              <a href="https://doi.org/10.1115/1.4072056" target="_blank" class="pub-link">Paper</a>
+              <a href="https://github.com/TsaiYK/ControlCoDesign_DigitalTwin_RL" target="_blank" class="pub-link">Code</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="pub-item" data-tag="ccd">
+          <div class="pub-media">
+            <img src="images/PO_CCD_JMD.png" alt="Parametric multi-objective CCD" />
+          </div>
+          <div class="pub-body">
+            <div class="pub-meta">
+              <span class="pub-tag">CCD</span>
+              <span class="pub-year">2026</span>
+            </div>
+            <h3 class="pub-title">Parametric Multi-Objective Optimization for Simultaneous and Nested Control Co-Design Formulations with Tube-Based Model Predictive Controllers</h3>
+            <p class="pub-authors"><strong>Ying-Kuan Tsai</strong>, Richard J Malak Jr</p>
+            <p class="pub-venue">Journal of Mechanical Design · April 2026</p>
+            <div class="pub-links">
+              <a href="https://asmedigitalcollection.asme.org/mechanicaldesign/article/148/11/111701/1232460" target="_blank" class="pub-link">Paper</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="pub-item" data-tag="ccd">
+          <div class="pub-media">
+            <img src="images/CCD_SolA_numerical_GIF.gif" alt="Robust CCD tube-based MPC" />
+          </div>
+          <div class="pub-body">
+            <div class="pub-meta">
+              <span class="pub-tag">CCD</span>
+              <span class="pub-year">2023</span>
+            </div>
+            <h3 class="pub-title">Robust Control Co-Design Using Tube-Based Model Predictive Control</h3>
+            <p class="pub-authors"><strong>Ying-Kuan Tsai</strong>, Richard Malak</p>
+            <p class="pub-venue">Proceedings of American Control Conference · July 2023</p>
+            <div class="pub-links">
+              <a href="https://ieeexplore.ieee.org/abstract/document/10156303" target="_blank" class="pub-link">Paper</a>
+              <a href="https://github.com/TsaiYK/RobustCCDTubeMPC" target="_blank" class="pub-link">Code</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span class="footer-logo">DISO Lab</span>
+      <span class="footer-copy">© 2026 DISO Lab · Texas State University</span>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="https://scholar.google.com/citations?hl=en&authuser=3&user=FnJgFQEAAAAJ" target="_blank">Google Scholar</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

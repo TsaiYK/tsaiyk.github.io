@@ -1,9 +1,12 @@
 // News toggle
-function toggleNews(btn) {
-  const detail = btn.nextElementSibling;
-  const isOpen = detail.classList.toggle('open');
-  btn.textContent = isOpen ? 'Read less ↑' : 'Read more ↓';
-}
+document.querySelectorAll('.news-toggle').forEach(btn => {
+  btn.addEventListener('click', function () {
+    const detail = this.nextElementSibling;
+    if (!detail) return;
+    const isOpen = detail.classList.toggle('open');
+    this.textContent = isOpen ? 'Read less ↑' : 'Read more ↓';
+  });
+});
 
 // Nav toggle
 function toggleNav() {
@@ -44,14 +47,16 @@ function handleForm(e) {
   const notice = document.getElementById('form-notice');
   notice.style.display = 'block';
   notice.style.color = 'hsl(218 60% 75%)';
-  notice.textContent = '✓ Thanks for reaching out — we'll reply within 2 business days.';
+  notice.textContent = "✓ Thanks for reaching out — we'll reply within 2 business days.";
   e.target.reset();
 }
 
 // Smooth scroll offset for sticky nav
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
-    const target = document.querySelector(a.getAttribute('href'));
+    const href = a.getAttribute('href');
+    if (href === '#') return;
+    const target = document.querySelector(href);
     if (!target) return;
     e.preventDefault();
     const top = target.getBoundingClientRect().top + window.scrollY - 68;
