@@ -61,7 +61,7 @@
           Traditional engineering design separates physical system design from controller design, solving each sequentially. This sequential approach is inherently suboptimal because a system's physical structure fundamentally shapes what controllers can achieve, and vice versa. Control Co-Design (CCD) breaks this barrier by solving both problems simultaneously, unlocking performance gains that neither approach can achieve alone.
         </p>
         <p style="color: var(--ink-2); line-height: 1.8; margin-bottom: 1rem;">
-          Our research develops CCD formulations that are scalable, robust, and adaptable. We integrate deep reinforcement learning to handle high-dimensional, nonlinear design-control spaces, and tube-based Model Predictive Control to guarantee constraint satisfaction under bounded disturbances. We also develop parametric and multi-objective formulations that yield a rich set of Pareto-optimal design-control tradeoffs.
+          Our research develops CCD frameworks that integrate deep reinforcement learning to handle high-dimensional and nonlinear design-control spaces with constraints under isturbances. We also develop multi-objective formulations that yield a set of Pareto-optimal solutions to enable performance-robustness tradeoffs.
         </p>
         <p style="color: var(--ink-2); line-height: 1.8;">
           Application domains include active suspension systems, robotics, aerospace, and smart material structures. A key focus is enabling multi-generation CCD — where digital twins accumulate operational data to improve the joint design and policy in successive system iterations.
@@ -110,8 +110,8 @@
               <path d="M13 10h6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
             </svg>
           </div>
-          <h3>Robust CCD with Tube-MPC</h3>
-          <p>We extend CCD to uncertain environments using tube-based MPC, ensuring that the jointly optimized system remains safe and performant even under bounded disturbances and model mismatch.</p>
+          <h3>Uncertainty Quantification and Robust Decision-Making</h3>
+          <p>We quantify inherent uncertainty from systems and environments, including model error, sensor noise, and disturbances, and leverage it to improve system robustness. By embedding uncertainty estimates directly into the decision-making loop, we design CCD solutions that remain safe and high-performing even under real-world variability.</p>
         </div>
       </div>
     </div>
