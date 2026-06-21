@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teaching | DISO Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/png" href="images/diso_lab_logo_v2.png" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">DISO Lab</a>
+      <ul class="nav-links">
+        <li><a href="index.html#news">News</a></li>
+        <li><a href="index.html#team">Team</a></li>
+        <li><a href="index.html#research">Research</a></li>
+        <li><a href="index.html#publications">Publications</a></li>
+        <li><a href="teaching.html" class="active">Teaching</a></li>
+        <li><a href="index.html#join">Join Us</a></li>
+        <li><a href="index.html#contact" class="nav-cta">Contact</a></li>
+      </ul>
+      <button class="nav-hamburger" aria-label="Toggle menu" onclick="toggleNav()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MOBILE NAV -->
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="index.html#news"         onclick="closeNav()">News</a>
+    <a href="index.html#team"         onclick="closeNav()">Team</a>
+    <a href="index.html#research"     onclick="closeNav()">Research</a>
+    <a href="index.html#publications" onclick="closeNav()">Publications</a>
+    <a href="teaching.html"           onclick="closeNav()">Teaching</a>
+    <a href="index.html#join"         onclick="closeNav()">Join Us</a>
+    <a href="index.html#contact"      onclick="closeNav()">Contact</a>
+  </div>
+
+  <!-- HEADER -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow">Courses taught</p>
+        <h2 class="section-title">Teaching</h2>
+        <p class="section-desc">Courses taught at Texas State University and Texas A&amp;M University, spanning undergraduate and graduate-level topics in mechanical engineering, numerical methods, and engineering design.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- COURSE LIST -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="teaching-list">
+
+        <!-- Course 1: ME XXX (TBD) -->
+        <div class="teaching-item">
+          <div class="teaching-header">
+            <span class="teaching-badge">ME XXX</span>
+            <span class="teaching-term">Fall 2026 · Texas State University</span>
+          </div>
+          <h3>Course Title TBD</h3>
+          <p class="teaching-role">Mechanical Engineering · Texas State University</p>
+          <p class="teaching-tbd">Course details to be announced.</p>
+        </div>
+
+        <!-- Course 2: MEEN 357 Fall 2023 -->
+        <div class="teaching-item">
+          <div class="teaching-header">
+            <span class="teaching-badge">MEEN 357</span>
+            <span class="teaching-term">Fall 2023 · Texas A&amp;M University</span>
+          </div>
+          <h3>Engineering Analysis for Mechanical Engineers</h3>
+          <p class="teaching-role">Undergraduate Course · Mechanical Engineering · Texas A&amp;M University</p>
+          <p class="teaching-desc">This course provides a practical foundation for the use of numerical methods to solve engineering problems.</p>
+          <ul class="teaching-topics">
+            <li><strong>Topics:</strong> solving systems of linear equations, curve fitting, root finding, numerical integration, numerical differentiation, initial value problems, boundary value problems, eigenvalues, and optimization methods.</li>
+            <li><strong>Project:</strong> Apply numerical methods and Python programming to model, simulate, and optimize an autonomous Mars rover capable of navigating challenging Martian terrain.</li>
+          </ul>
+        </div>
+
+        <!-- Course 3: MEEN 357 Spring 2023 -->
+        <div class="teaching-item">
+          <div class="teaching-header">
+            <span class="teaching-badge">MEEN 357</span>
+            <span class="teaching-term">Spring 2023 · Texas A&amp;M University</span>
+          </div>
+          <h3>Engineering Analysis for Mechanical Engineers</h3>
+          <p class="teaching-role">Undergraduate Course · Mechanical Engineering · Texas A&amp;M University</p>
+          <p class="teaching-desc">This course provides a practical foundation for the use of numerical methods to solve engineering problems.</p>
+          <ul class="teaching-topics">
+            <li><strong>Topics:</strong> solving systems of linear equations, curve fitting, root finding, numerical integration, numerical differentiation, initial value problems, boundary value problems, eigenvalues, and optimization methods.</li>
+            <li><strong>Project:</strong> Apply numerical methods and Python programming to model, simulate, and optimize an autonomous Mars rover capable of navigating challenging Martian terrain.</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span class="footer-logo">DISO Lab</span>
+      <span class="footer-copy">© 2026 DISO Lab · Texas State University</span>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="https://scholar.google.com/citations?hl=en&authuser=3&user=FnJgFQEAAAAJ" target="_blank">Google Scholar</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
