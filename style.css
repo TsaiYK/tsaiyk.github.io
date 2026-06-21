@@ -321,6 +321,9 @@ strong { font-weight: 600; }
 .teaching-topics li { font-size: 0.875rem; color: var(--ink-2); line-height: 1.6; padding-left: 1.25rem; position: relative; }
 .teaching-topics li::before { content: '—'; position: absolute; left: 0; color: var(--accent); font-weight: 600; }
 .teaching-tbd { font-size: 0.9rem; color: var(--ink-3); font-style: italic; }
+/* specificity boost for teaching classes nested inside .research-card */
+.research-card .teaching-role { font-size: 12px; color: var(--ink-3); }
+.research-card .teaching-tbd  { color: var(--ink-3); }
 
 /* === RESPONSIVE === */
 @media (max-width: 900px) {
