@@ -304,6 +304,7 @@ strong { font-weight: 600; }
 .footer-links a:hover { color: #fff; }
 
 /* === MORE PUBLICATIONS === */
+.more-pubs-cta { margin-top: 3.5rem; padding-top: 3rem; border-top: 2px solid var(--line); display: flex; justify-content: center; }
 .more-pubs { margin-top: 3.5rem; padding-top: 3rem; border-top: 2px solid var(--line); }
 .more-pubs-title { font-family: 'Lora', serif; font-size: 1.4rem; font-weight: 600; color: var(--ink); letter-spacing: -0.02em; margin-bottom: 2rem; }
 .more-pubs-group { margin-bottom: 2.5rem; }
