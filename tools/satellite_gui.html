@@ -1,0 +1,690 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Satellite Attitude Control</title>
+<style>
+  :root {
+    --maroon: #501214; --gold: #AC9155; --gold-d: #8a6d2b; --ink: #222; --muted: #6e6e6e;
+    --panel: #f4f2ec; --beige: #eee9dd; --pink: #fbe0db; --pinktxt: #752214; --line: #d9d6cf;
+    --roll: #2a78d6; --pitch: #eb6834; --yaw: #1baf7a; --good: #1e7b34; --warn: #9a6400; --bad: #b3261e;
+    --bg: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.45 Arial, Helvetica, sans-serif; }
+  header { background: var(--maroon); color: #fff; padding: 12px 20px; display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+  header h1 { margin: 0; font-size: 20px; letter-spacing: .2px; }
+  header .sub { color: #e8dcc0; font-size: 13px; }
+  .wrap { display: grid; grid-template-columns: 330px 1fr; gap: 16px; padding: 16px; max-width: 1500px; margin: 0 auto; }
+  @media (max-width: 900px) { .wrap { grid-template-columns: 1fr; } }
+  aside { background: var(--panel); border-radius: 6px; padding: 12px 14px; align-self: start; box-shadow: 0 1px 3px rgba(0,0,0,.18); }
+  aside h3 { margin: 12px 0 6px; font-size: 13px; text-transform: uppercase; letter-spacing: .6px; color: var(--maroon); }
+  aside h3:first-child { margin-top: 0; }
+  .seg { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
+  .seg button { border: 1px solid var(--gold); background: #fff; color: var(--maroon); font-weight: bold; padding: 7px 0; border-radius: 4px; cursor: pointer; font-size: 14px; }
+  .seg button.on { background: var(--maroon); border-color: var(--maroon); color: #fff; }
+  .row { display: grid; grid-template-columns: 92px 1fr 70px; align-items: center; gap: 8px; margin: 6px 0; }
+  .row label { font-size: 13px; }
+  .row input[type=range] { width: 100%; accent-color: var(--maroon); }
+  .row input[type=number] { width: 70px; padding: 3px 4px; border: 1px solid var(--line); border-radius: 3px; font: inherit; font-size: 13px; text-align: right; }
+  .row.off { opacity: .35; pointer-events: none; }
+  select { width: 100%; padding: 5px; font: inherit; border: 1px solid var(--line); border-radius: 3px; background: #fff; }
+  .btn { width: 100%; margin-top: 8px; padding: 7px; border: 1px solid var(--gold); background: #fff; color: var(--maroon); border-radius: 4px; cursor: pointer; font-weight: bold; }
+  .btn.primary { background: var(--maroon); color: #fff; border-color: var(--maroon); }
+  .note { font-size: 12px; color: var(--muted); }
+  main { min-width: 0; }
+  .tabs { display: flex; gap: 4px; border-bottom: 2px solid var(--maroon); flex-wrap: wrap; }
+  .tabs button { border: none; background: var(--beige); color: var(--maroon); padding: 9px 16px; cursor: pointer; font-weight: bold; border-radius: 5px 5px 0 0; font-size: 14px; }
+  .tabs button.on { background: var(--maroon); color: #fff; }
+  .tab { display: none; padding: 14px 4px; }
+  .tab.on { display: block; }
+  .status { padding: 8px 12px; border-radius: 4px; margin-bottom: 10px; font-size: 14px; background: var(--beige); color: var(--maroon); }
+  .verdict { font-weight: bold; }
+  .STABLE { color: var(--good); } .MARGINAL { color: var(--warn); } .UNSTABLE { color: var(--bad); }
+  canvas { width: 100%; display: block; }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px; margin-bottom: 12px; }
+  .card h4 { margin: 0 0 6px; color: var(--maroon); font-size: 14px; }
+  table.mat { border-collapse: collapse; font-family: "Courier New", monospace; font-size: 12.5px; }
+  table.mat th { color: var(--muted); font-weight: normal; padding: 2px 6px; text-align: right; }
+  table.mat td { padding: 2px 6px; text-align: right; }
+  table.mat td.z { color: #c2bfb5; }
+  table.mat tr:nth-child(even) td { background: #faf9f6; }
+  .scroll { overflow-x: auto; }
+  .eigs { font-family: "Courier New", monospace; font-size: 13px; word-break: break-word; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 1100px) { .grid2 { grid-template-columns: 1fr; } }
+  .math { font-family: "Times New Roman", Times, serif; font-size: 19px; line-height: 2.2; }
+  .frac { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; line-height: 1.3; margin: 0 3px; }
+  .frac > span:first-child { border-bottom: 1.5px solid var(--ink); padding: 0 4px 2px; }
+  .frac > span:last-child { padding: 2px 4px 0; }
+  table.routh { border-collapse: collapse; font-family: "Courier New", monospace; font-size: 14px; margin: 8px 0; }
+  table.routh td, table.routh th { padding: 4px 12px; text-align: right; }
+  table.routh th { text-align: left; font-family: "Times New Roman", serif; font-size: 16px; }
+  table.routh td.first { background: #eef4fc; font-weight: bold; }
+  table.routh td.sg { color: var(--muted); text-align: left; }
+  table.routh td.nt { color: var(--warn); font-family: Arial, sans-serif; font-size: 12px; text-align: left; }
+  table.routh tr:nth-child(even) td:not(.first) { background: #faf9f6; }
+  .concl { border-left: 4px solid var(--roll); background: #f6f8fb; padding: 10px 12px; font-size: 15px; }
+  .warnbox { margin-top: 8px; color: var(--muted); font-size: 13px; }
+  .warnbox b.bad { color: var(--bad); }
+  .animwrap { display: grid; grid-template-columns: minmax(280px, 1fr) 1.3fr; gap: 12px; align-items: start; }
+  @media (max-width: 1100px) { .animwrap { grid-template-columns: 1fr; } }
+  .animbar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin: 6px 0 10px; }
+  .animbar button { padding: 6px 14px; border: 1px solid var(--maroon); background: var(--maroon); color: #fff; border-radius: 4px; cursor: pointer; font-weight: bold; }
+  .animbar button.ghost { background: #fff; color: var(--maroon); }
+  .animbar input[type=range] { flex: 1; min-width: 140px; accent-color: var(--maroon); }
+  .readout { font-size: 15px; } .readout .mono { font-family: "Courier New", monospace; white-space: pre; }
+  .legend { display: flex; gap: 14px; font-size: 13px; color: var(--muted); }
+  .legend i { display: inline-block; width: 18px; height: 3px; vertical-align: middle; margin-right: 5px; }
+  footer { text-align: center; color: var(--muted); font-size: 12px; padding: 10px 16px 18px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Satellite Attitude Control: P / PI / PD / PID</h1>
+  <span class="sub">ME 4351 Control Systems · Texas State University · 3-DoF linear model (roll–yaw from Tsai &amp; Malak, ASME LDSC 2025; pitch added)</span>
+</header>
+
+<div class="wrap">
+  <aside>
+    <h3>Controller</h3>
+    <div class="seg" id="ctrlSeg">
+      <button data-c="P">P</button><button data-c="PI">PI</button><button data-c="PD">PD</button><button data-c="PID" class="on">PID</button>
+    </div>
+    <div class="row" id="rowKp"><label>K<sub>P</sub></label><input type="range" id="kp" min="0" max="10" step="0.1"><input type="number" id="kpN" step="0.1"></div>
+    <div class="row" id="rowKi"><label>K<sub>I</sub></label><input type="range" id="ki" min="0" max="5" step="0.05"><input type="number" id="kiN" step="0.05"></div>
+    <div class="row" id="rowKd"><label>K<sub>D</sub></label><input type="range" id="kd" min="0" max="10" step="0.1"><input type="number" id="kdN" step="0.1"></div>
+    <button class="btn" id="reset">Reset default gains</button>
+
+    <h3>Analysis</h3>
+    <div class="row" style="grid-template-columns: 92px 1fr;"><label>Output for T(s)</label>
+      <select id="out"><option value="0">roll φ (x1)</option><option value="1">pitch θ (x3)</option><option value="2">yaw ψ (x5)</option></select></div>
+
+    <h3>Plant &amp; scenario</h3>
+    <div class="row"><label>cos α (jet)</label><input type="range" id="ca" min="0.05" max="1" step="0.0001"><input type="number" id="caN" step="0.01"></div>
+    <div class="row"><label>Disturbance</label><input type="range" id="dist" min="0" max="0.3" step="0.01"><input type="number" id="distN" step="0.01"></div>
+    <div class="row"><label>φ₀ (deg)</label><input type="range" id="phi0" min="-60" max="60" step="1"><input type="number" id="phi0N" step="1"></div>
+    <div class="row"><label>θ₀ (deg)</label><input type="range" id="th0" min="-60" max="60" step="1"><input type="number" id="th0N" step="1"></div>
+    <div class="row"><label>ψ₀ (deg)</label><input type="range" id="psi0" min="-60" max="60" step="1"><input type="number" id="psi0N" step="1"></div>
+    <div class="row"><label>Sim. time</label><input type="range" id="T" min="10" max="60" step="5"><input type="number" id="TN" step="5"></div>
+    <p class="note">cos α is the paper's plant design variable: the thrust-jet orientation splits authority between roll and yaw. The disturbance is a constant torque on every axis (e.g., solar radiation pressure).</p>
+  </aside>
+
+  <main>
+    <div class="status" id="status"></div>
+    <div class="tabs" id="tabs">
+      <button data-t="resp" class="on">Response</button>
+      <button data-t="stab">Stability (A+BK)</button>
+      <button data-t="tf">T(s) &amp; Routh</button>
+      <button data-t="anim">Animation</button>
+    </div>
+
+    <section class="tab on" id="tab-resp">
+      <div class="card"><h4>Attitude angles</h4><canvas id="cvAng" height="260"></canvas></div>
+      <div class="card"><h4>Control inputs u</h4><canvas id="cvU" height="200"></canvas></div>
+      <div id="ssMsg" class="note" style="font-size:14px;color:var(--ink)"></div>
+    </section>
+
+    <section class="tab" id="tab-stab">
+      <div class="grid2">
+        <div>
+          <div class="card" id="eigA"></div>
+          <div class="card" id="lawCard"></div>
+          <div class="card" id="eigCL"></div>
+        </div>
+        <div class="card"><h4>s-plane (shaded = unstable)</h4><canvas id="cvPoles" height="380"></canvas>
+          <div class="legend"><span><b style="color:#8a8984;font-size:16px">×</b> open loop: eig(A)</span><span><b style="color:#2a78d6;font-size:16px">●</b> closed loop: eig(A+BK)</span></div>
+        </div>
+      </div>
+      <div class="card"><h4>K =</h4><div class="scroll" id="Kmat"></div></div>
+      <div class="card"><h4 id="AclTitle">A + BK =</h4><div class="scroll" id="Amat"></div></div>
+    </section>
+
+    <section class="tab" id="tab-tf">
+      <div class="card"><div id="gcLine" class="math"></div></div>
+      <div class="card"><div id="tfLine" class="math"></div><div id="ceLine" class="math" style="margin-top:8px;font-size:17px"></div></div>
+      <div class="card"><h4>Routh array (first column highlighted)</h4><div class="scroll" id="routh"></div>
+        <div class="concl" id="concl"></div><div class="warnbox" id="hidden"></div></div>
+    </section>
+
+    <section class="tab" id="tab-anim">
+      <div class="animbar">
+        <button id="play">▶ Play</button><button id="restart" class="ghost">⟲ Restart</button>
+        <input type="range" id="scrub" min="0" max="1000" value="0">
+        <label class="note">Speed <select id="speed" style="width:auto"><option value="1.5">0.5×</option><option value="3" selected>1×</option><option value="6">2×</option></select></label>
+      </div>
+      <div class="animwrap">
+        <div class="card"><canvas id="cv3d" height="420"></canvas>
+          <div class="legend"><span><i style="background:var(--roll)"></i>roll axis</span><span><i style="background:var(--pitch)"></i>pitch axis</span><span><i style="background:var(--yaw)"></i>yaw axis</span></div></div>
+        <div>
+          <div class="card"><div class="readout" id="readout"></div></div>
+          <div class="card"><canvas id="cvAnimAng" height="300"></canvas></div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+<footer>Linear small-angle model in normalized orbital time. Everything runs locally in your browser; no internet connection needed.</footer>
+
+<script>
+"use strict";
+// ======================================================================
+// Plant (paper: Ix=3, Iy=1, Iz=3.5) + added pitch axis
+// ======================================================================
+const Ix = 3, Iy = 1, Iz = 3.5;
+const kx = (Ix - Iy) / Ix, ky = (Iz - Ix) / Iy, sigTh = (Ix - Iy) / Iz;
+const ANG = [0, 2, 4], RATE = [1, 3, 5];
+const COL = { roll: "#2a78d6", pitch: "#eb6834", yaw: "#1baf7a", gray: "#8a8984" };
+const AXN = ["roll", "pitch", "yaw"], SYM = ["φ", "θ", "ψ"];
+const DEFAULTS = { P: [2, 0, 0], PI: [2, 1, 0], PD: [2, 0, 2], PID: [3, 1.5, 3] };
+
+const zeros = (r, c) => Array.from({ length: r }, () => new Array(c).fill(0));
+const eye = n => { const M = zeros(n, n); for (let i = 0; i < n; i++) M[i][i] = 1; return M; };
+const matmul = (A, B) => A.map(r => B[0].map((_, j) => r.reduce((s, v, k) => s + v * B[k][j], 0)));
+const matvec = (A, x) => A.map(r => r.reduce((s, v, k) => s + v * x[k], 0));
+
+function buildPlant(ca) {
+  const cb = Math.sqrt(Math.max(0, 1 - ca * ca));
+  const A = zeros(6, 6);
+  A[0][1] = 1; A[1][0] = -4 * kx; A[1][5] = kx - 1;
+  A[2][3] = 1; A[3][2] = -3 * sigTh;
+  A[4][5] = 1; A[5][1] = ky + 1; A[5][4] = ky;
+  const B = zeros(6, 3);
+  B[1][0] = Iz / Ix * ca; B[3][1] = 1; B[5][2] = Iz / Iy * cb;
+  const C = zeros(3, 6), Cd = zeros(3, 6);
+  for (let i = 0; i < 3; i++) { C[i][ANG[i]] = 1; Cd[i][RATE[i]] = 1; }
+  return { A, B, C, Cd };
+}
+
+// A_cl = A_used + B_used K ; u = K [x; z]
+function closedLoop(P, ctrl, Kp, Ki, Kd) {
+  const useI = ctrl.includes("I"), useD = ctrl.includes("D");
+  const kd = useD ? Kd : 0;
+  const Kx = zeros(3, 6);
+  for (let i = 0; i < 3; i++) { Kx[i][ANG[i]] = -Kp; Kx[i][RATE[i]] = -kd; }
+  if (!useI) {
+    const Acl = P.A.map((r, i) => r.map((v, j) => v + P.B[i].reduce((s, b, k) => s + b * Kx[k][j], 0)));
+    return { Acl, K: Kx, n: 6, useI };
+  }
+  const n = 9, Aa = zeros(9, 9), Ba = zeros(9, 3), K = zeros(3, 9);
+  for (let i = 0; i < 6; i++) { for (let j = 0; j < 6; j++) Aa[i][j] = P.A[i][j]; for (let k = 0; k < 3; k++) Ba[i][k] = P.B[i][k]; }
+  for (let i = 0; i < 3; i++) { Aa[6 + i][ANG[i]] = -1; for (let j = 0; j < 6; j++) K[i][j] = Kx[i][j]; K[i][6 + i] = Ki; }
+  const Acl = Aa.map((r, i) => r.map((v, j) => v + Ba[i].reduce((s, b, k) => s + b * K[k][j], 0)));
+  return { Acl, K, n, useI };
+}
+
+// ======================================================================
+// Polynomials, characteristic polynomial, roots
+// ======================================================================
+function charpoly(M) {               // Faddeev–LeVerrier, returns [1, c_{n-1}, ..., c_0]
+  const n = M.length; const c = new Array(n + 1).fill(0); c[0] = 1;
+  let Mk = zeros(n, n);
+  for (let k = 1; k <= n; k++) {
+    const AM = matmul(M, Mk);
+    for (let i = 0; i < n; i++) AM[i][i] += c[k - 1];
+    Mk = AM;
+    const AMk = matmul(M, Mk);
+    let tr = 0; for (let i = 0; i < n; i++) tr += AMk[i][i];
+    c[k] = -tr / k;
+  }
+  return c;
+}
+function cleanPoly(p, rel = 1e-9) {
+  const sc = Math.max(...p.map(Math.abs), 1e-300);
+  return p.map(v => (Math.abs(v) < rel * sc ? 0 : v));
+}
+function polySub(a, b) {             // a - b, both highest-first, padded to same length
+  const n = Math.max(a.length, b.length);
+  const A = new Array(n - a.length).fill(0).concat(a), B = new Array(n - b.length).fill(0).concat(b);
+  return A.map((v, i) => v - B[i]);
+}
+function trimLead(p) { let i = 0; while (i < p.length - 1 && p[i] === 0) i++; return p.slice(i); }
+
+// complex helpers
+const cx = (re, im = 0) => ({ re, im });
+const cadd = (a, b) => cx(a.re + b.re, a.im + b.im), csub = (a, b) => cx(a.re - b.re, a.im - b.im);
+const cmul = (a, b) => cx(a.re * b.re - a.im * b.im, a.re * b.im + a.im * b.re);
+const cdiv = (a, b) => { const d = b.re * b.re + b.im * b.im; return cx((a.re * b.re + a.im * b.im) / d, (a.im * b.re - a.re * b.im) / d); };
+const cabs = a => Math.hypot(a.re, a.im);
+
+function roots(p) {                  // Aberth–Ehrlich on monic polynomial (highest first)
+  p = trimLead(p); const n = p.length - 1; if (n < 1) return [];
+  const a = p.map(v => v / p[0]);
+  const dp = a.slice(0, n).map((v, i) => v * (n - i));
+  const ev = (q, z) => q.reduce((s, c) => cadd(cmul(s, z), cx(c)), cx(0));
+  const R = 1 + Math.max(...a.slice(1).map(Math.abs));
+  let z = Array.from({ length: n }, (_, k) => { const th = 2 * Math.PI * k / n + 0.4; return cx(R * 0.7 * Math.cos(th), R * 0.7 * Math.sin(th)); });
+  for (let it = 0; it < 600; it++) {
+    let maxStep = 0;
+    const zn = z.map((zk, k) => {
+      const f = ev(a, zk), fp = ev(dp, zk);
+      if (cabs(f) === 0) return zk;
+      const ratio = cdiv(f, fp);
+      let s = cx(0); for (let j = 0; j < n; j++) if (j !== k) { const d = csub(zk, z[j]); if (cabs(d) > 0) s = cadd(s, cdiv(cx(1), d)); }
+      const w = cdiv(ratio, csub(cx(1), cmul(ratio, s)));
+      maxStep = Math.max(maxStep, cabs(w));
+      return csub(zk, w);
+    });
+    z = zn;
+    if (maxStep < 1e-14 * R) break;
+  }
+  // tidy: tiny real/imag parts → 0, pair conjugates
+  return z.map(r => cx(Math.abs(r.re) < 1e-9 ? 0 : r.re, Math.abs(r.im) < 1e-9 ? 0 : r.im))
+          .sort((u, v) => u.re - v.re || u.im - v.im);
+}
+
+// the closed loop splits into two independent groups: pitch, and roll–yaw
+function groups(n) {
+  const pitch = [2, 3], ry = [0, 1, 4, 5];
+  if (n === 9) { pitch.push(7); ry.push(6, 8); }
+  return { pitch, ry };
+}
+const sub = (M, idx) => idx.map(i => idx.map(j => M[i][j]));
+function eigs(M) {
+  const g = groups(M.length);
+  return roots(cleanPoly(charpoly(sub(M, g.ry)))).concat(roots(cleanPoly(charpoly(sub(M, g.pitch)))))
+         .sort((u, v) => u.re - v.re || u.im - v.im);
+}
+function verdict(ev, tol = 1e-6) {
+  const m = Math.max(...ev.map(e => e.re));
+  return m < -tol ? "STABLE" : (m <= tol ? "MARGINAL" : "UNSTABLE");
+}
+
+// Closed-loop T(s) = Y_j / R_j with Gc = Kp + Ki/s + Kd s (derivative on error)
+function transferFunction(P, ctrl, Kp, Ki, Kd, j) {
+  const { Acl, n } = closedLoop(P, ctrl, Kp, Ki, Kd);
+  const g = groups(n), idx = j === 1 ? g.pitch : g.ry;
+  const M = sub(Acl, idx), m = idx.length;
+  const b0 = new Array(n).fill(0), b1 = new Array(n).fill(0);
+  for (let i = 0; i < 6; i++) b0[i] = P.B[i][j] * Kp;
+  if (ctrl.includes("I")) b0[6 + j] = 1;
+  if (ctrl.includes("D")) for (let i = 0; i < 6; i++) b1[i] = P.B[i][j] * Kd;
+  const ci = idx.indexOf(ANG[j]);
+  const den = charpoly(M);
+  const numOf = b => {                         // c(sI-M)^{-1}b numerator = det(sI-M+bc) - det(sI-M)
+    const bs = idx.map(i => b[i]);
+    if (bs.every(v => v === 0)) return [0];
+    const Mb = M.map((r, a) => r.map((v, k) => v - (k === ci ? bs[a] : 0)));
+    return polySub(charpoly(Mb), den);
+  };
+  const n0 = numOf(b0), n1 = numOf(b1).concat([0]);   // s * n1
+  let num = cleanPoly(polySub(n1, n0.map(v => -v)), 1e-10);
+  num = trimLead(num);
+  return { num, den: cleanPoly(den), fullDeg: n, deg: m };
+}
+
+// ======================================================================
+// Routh array (epsilon rule + row-of-zeros rule), evaluated at two ε
+// ======================================================================
+function routhAt(coeffs, eps) {
+  const n = coeffs.length - 1, ncol = Math.floor(n / 2) + 1;
+  const sc = Math.max(...coeffs.map(Math.abs));
+  const tol = 1e-9 * sc;
+  const pad = r => r.concat(new Array(ncol - r.length).fill(0));
+  const rows = [pad(coeffs.filter((_, i) => i % 2 === 0)), pad(coeffs.filter((_, i) => i % 2 === 1))];
+  const notes = {}; let zeroRow = false, epsUsed = false;
+  for (let k = 2; k <= n + 1; k++) {
+    const prev = rows[rows.length - 2], cur = rows[rows.length - 1], r = rows.length - 1;
+    if (cur.every(v => Math.abs(v) < tol)) {
+      zeroRow = true;
+      const p = n - (r - 1);
+      for (let i = 0; i < ncol; i++) cur[i] = (p - 2 * i > 0) ? (p - 2 * i) * prev[i] : 0;
+      notes[r] = "row of zeros → d/ds of auxiliary polynomial";
+    }
+    if (Math.abs(cur[0]) < tol) {
+      epsUsed = true; cur[0] = eps;
+      notes[r] = (notes[r] ? notes[r] + "; " : "") + "first element 0 → ε";
+    }
+    if (k === n + 1) break;
+    const nw = [];
+    for (let i = 0; i < ncol; i++) {
+      const a = i + 1 < ncol ? prev[i + 1] : 0, b = i + 1 < ncol ? cur[i + 1] : 0;
+      nw.push((cur[0] * a - prev[0] * b) / cur[0]);
+    }
+    rows.push(nw);
+  }
+  return { rows: rows.slice(0, n + 1), notes, zeroRow, epsUsed };
+}
+function fmt(v, p = 4) {
+  if (!isFinite(v)) return "∞";
+  if (Math.abs(v) < 1e-12) return "0";
+  const s = Number(v.toPrecision(p)).toString();
+  return s.replace("-", "−");
+}
+function routh(den) {
+  const e1 = 1e-6, e2 = 1e-7;
+  const A = routhAt(den, e1), B = routhAt(den, e2);
+  const disp = A.rows.map((row, r) => row.map((v1, c) => {
+    const v2 = B.rows[r][c];
+    const scale = Math.max(Math.abs(v1), Math.abs(v2));
+    if (scale < 1e-12) return { txt: "0", s: 0 };
+    if (Math.abs(v1 - v2) <= 1e-4 * scale + 1e-12) return { txt: fmt(v2), s: Math.sign(v2) };
+    const ratio = v2 / v1;
+    if (Math.abs(ratio - 10) < 0.5) {               // ~ a/ε
+      const a = v1 * e1; return { txt: (Math.abs(Math.abs(a) - 1) < 1e-3 ? (a < 0 ? "−" : "") : fmt(a)) + "1/ε".slice(Math.abs(Math.abs(a) - 1) < 1e-3 ? 0 : 1).replace(/^\//, "/"), s: Math.sign(v2), eps: true, a };
+    }
+    if (Math.abs(ratio - 0.1) < 0.01) {             // ~ a ε
+      const a = v1 / e1; return { txt: Math.abs(a - 1) < 1e-3 ? "ε" : fmt(a) + "ε", s: Math.sign(v2), eps: true };
+    }
+    return { txt: fmt(v2) + " (ε→0⁺)", s: Math.sign(v2), eps: true };
+  }));
+  // tidy "a/ε" text
+  disp.forEach(row => row.forEach(d => {
+    if (d.a !== undefined) d.txt = (Math.abs(Math.abs(d.a) - 1) < 1e-3 ? (d.a < 0 ? "−1" : "1") : fmt(d.a)) + "/ε";
+  }));
+  const signs = disp.map(r => r[0].s);
+  let changes = 0; for (let i = 1; i < signs.length; i++) if (signs[i - 1] * signs[i] < 0) changes++;
+  return { disp, signs, changes, zeroRow: A.zeroRow, epsUsed: A.epsUsed, notes: A.notes };
+}
+
+// ======================================================================
+// Simulation (RK4, constant disturbance torque d on each axis)
+// ======================================================================
+function simulate(P, cl, x0, d, T) {
+  const n = cl.n, dt = 0.01, every = 5, N = Math.round(T / dt);
+  const Bd = zeros(n, 3); for (let i = 0; i < 6; i++) for (let k = 0; k < 3; k++) Bd[i][k] = P.B[i][k];
+  const dv = matvec(Bd, d);
+  const f = x => matvec(cl.Acl, x).map((v, i) => v + dv[i]);
+  let x = new Array(n).fill(0); for (let i = 0; i < 6; i++) x[i] = x0[i];
+  const t = [0], X = [x.slice()];
+  for (let k = 1; k <= N; k++) {
+    const k1 = f(x), k2 = f(x.map((v, i) => v + dt / 2 * k1[i])), k3 = f(x.map((v, i) => v + dt / 2 * k2[i])), k4 = f(x.map((v, i) => v + dt * k3[i]));
+    x = x.map((v, i) => v + dt / 6 * (k1[i] + 2 * k2[i] + 2 * k3[i] + k4[i]));
+    if (k % every === 0) { t.push(k * dt); X.push(x.slice()); }
+    if (Math.max(...x.map(Math.abs)) > 1e6) { t.push(k * dt); X.push(x.slice()); break; }
+  }
+  const U = X.map(xx => matvec(cl.K, xx));
+  return { t, X, U };
+}
+
+// ======================================================================
+// Canvas plotting
+// ======================================================================
+function setupCanvas(cv) {
+  if (!cv.dataset.h) cv.dataset.h = cv.getAttribute("height");   // remember the intended CSS height once
+  const dpr = window.devicePixelRatio || 1, w = cv.clientWidth, h = cv.dataset.h * 1;
+  cv.style.height = h + "px";
+  if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); }
+  const ctx = cv.getContext("2d"); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, w, h);
+  return { ctx, w, h };
+}
+function niceTicks(lo, hi, n = 6) {
+  const span = hi - lo || 1, step0 = span / n, mag = Math.pow(10, Math.floor(Math.log10(step0)));
+  const step = [1, 2, 2.5, 5, 10].map(m => m * mag).find(s => span / s <= n) || mag * 10;
+  const out = []; for (let v = Math.ceil(lo / step) * step; v <= hi + 1e-9; v += step) out.push(Math.abs(v) < 1e-12 ? 0 : v);
+  return out;
+}
+function linePlot(cv, t, series, opt = {}) {
+  const { ctx, w, h } = setupCanvas(cv);
+  const L = 58, R = 14, Tp = 28, Bt = 36, pw = w - L - R, ph = h - Tp - Bt;
+  let lo = Infinity, hi = -Infinity;
+  series.forEach(s => s.y.forEach(v => { if (isFinite(v)) { lo = Math.min(lo, v); hi = Math.max(hi, v); } }));
+  let clipped = false;
+  if (opt.clip && (hi > opt.clip || lo < -opt.clip)) { lo = Math.max(lo, -opt.clip); hi = Math.min(hi, opt.clip); clipped = true; }
+  if (lo === hi) { lo -= 1; hi += 1; }
+  const padv = 0.06 * (hi - lo); lo -= padv; hi += padv;
+  const t1 = t[t.length - 1] || 1, tmax = opt.tmax || t1;
+  const X = v => L + v / tmax * pw, Y = v => Tp + (hi - v) / (hi - lo) * ph;
+  ctx.font = "12px Arial"; ctx.fillStyle = "#52514e"; ctx.strokeStyle = "#e4e1da"; ctx.lineWidth = 1;
+  niceTicks(lo, hi, 5).forEach(v => { const y = Y(v); ctx.beginPath(); ctx.moveTo(L, y); ctx.lineTo(L + pw, y); ctx.stroke(); ctx.textAlign = "right"; ctx.fillText(fmt(v, 3), L - 6, y + 4); });
+  niceTicks(0, tmax, 8).forEach(v => { const x = X(v); ctx.beginPath(); ctx.moveTo(x, Tp); ctx.lineTo(x, Tp + ph); ctx.stroke(); ctx.textAlign = "center"; ctx.fillText(fmt(v, 3), x, Tp + ph + 15); });
+  ctx.strokeStyle = "#8a8984"; ctx.beginPath(); ctx.moveTo(L, Tp); ctx.lineTo(L, Tp + ph); ctx.lineTo(L + pw, Tp + ph); ctx.stroke();
+  if (lo < 0 && hi > 0) { ctx.strokeStyle = "#52514e"; ctx.lineWidth = 0.8; ctx.beginPath(); ctx.moveTo(L, Y(0)); ctx.lineTo(L + pw, Y(0)); ctx.stroke(); }
+  ctx.fillStyle = "#2b2a28"; ctx.textAlign = "center"; ctx.fillText(opt.xlabel || "time (normalized)", L + pw / 2, h - 6);
+  ctx.save(); ctx.translate(14, Tp + ph / 2); ctx.rotate(-Math.PI / 2); ctx.fillText(opt.ylabel || "", 0, 0); ctx.restore();
+  ctx.save(); ctx.beginPath(); ctx.rect(L, Tp, pw, ph); ctx.clip();
+  series.forEach(s => {
+    ctx.strokeStyle = s.color; ctx.lineWidth = 2; ctx.beginPath();
+    s.y.forEach((v, i) => { const x = X(t[i]), y = Y(Math.max(lo - 10 * (hi - lo), Math.min(hi + 10 * (hi - lo), v))); i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); });
+    ctx.stroke();
+  });
+  if (opt.cursor !== undefined) { ctx.strokeStyle = "#2b2a28"; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(X(opt.cursor), Tp); ctx.lineTo(X(opt.cursor), Tp + ph); ctx.stroke(); }
+  ctx.restore();
+  // legend
+  let lx = L + pw; ctx.textAlign = "right"; ctx.font = "13px Arial";
+  for (let i = series.length - 1; i >= 0; i--) {
+    const s = series[i]; ctx.fillStyle = "#2b2a28"; ctx.fillText(s.label, lx, 16); const tw = ctx.measureText(s.label).width;
+    ctx.strokeStyle = s.color; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(lx - tw - 26, 12); ctx.lineTo(lx - tw - 6, 12); ctx.stroke(); lx -= tw + 40;
+  }
+  if (clipped) { ctx.fillStyle = "#b3261e"; ctx.textAlign = "left"; ctx.font = "12px Arial"; ctx.fillText("diverging: response leaves the plot", L + 6, Tp + 14); }
+}
+function polePlot(cv, eA, eC) {
+  const { ctx, w, h } = setupCanvas(cv);
+  const r = Math.max(2, 1.15 * Math.max(...eA.concat(eC).map(cabs)));
+  const xlo = -r, xhi = Math.max(1, 0.4 * r), ylo = -r, yhi = r;
+  const L = 46, R = 12, Tp = 10, Bt = 34, pw = w - L - R, ph = h - Tp - Bt;
+  const X = v => L + (v - xlo) / (xhi - xlo) * pw, Y = v => Tp + (yhi - v) / (yhi - ylo) * ph;
+  ctx.fillStyle = "rgba(227,73,72,0.07)"; ctx.fillRect(X(0), Tp, X(xhi) - X(0), ph);
+  ctx.font = "12px Arial"; ctx.fillStyle = "#52514e"; ctx.strokeStyle = "#e4e1da"; ctx.lineWidth = 1;
+  niceTicks(ylo, yhi, 6).forEach(v => { ctx.beginPath(); ctx.moveTo(L, Y(v)); ctx.lineTo(L + pw, Y(v)); ctx.stroke(); ctx.textAlign = "right"; ctx.fillText(fmt(v, 3), L - 6, Y(v) + 4); });
+  niceTicks(xlo, xhi, 6).forEach(v => { ctx.beginPath(); ctx.moveTo(X(v), Tp); ctx.lineTo(X(v), Tp + ph); ctx.stroke(); ctx.textAlign = "center"; ctx.fillText(fmt(v, 3), X(v), Tp + ph + 15); });
+  ctx.strokeStyle = "#52514e"; ctx.beginPath(); ctx.moveTo(L, Y(0)); ctx.lineTo(L + pw, Y(0)); ctx.moveTo(X(0), Tp); ctx.lineTo(X(0), Tp + ph); ctx.stroke();
+  ctx.fillStyle = "#2b2a28"; ctx.textAlign = "center"; ctx.fillText("Re(s)", L + pw / 2, h - 4);
+  ctx.save(); ctx.translate(12, Tp + ph / 2); ctx.rotate(-Math.PI / 2); ctx.fillText("Im(s)", 0, 0); ctx.restore();
+  ctx.strokeStyle = COL.gray; ctx.lineWidth = 2.2;
+  eA.forEach(e => { const x = X(e.re), y = Y(e.im), s = 6; ctx.beginPath(); ctx.moveTo(x - s, y - s); ctx.lineTo(x + s, y + s); ctx.moveTo(x - s, y + s); ctx.lineTo(x + s, y - s); ctx.stroke(); });
+  eC.forEach(e => { ctx.beginPath(); ctx.arc(X(e.re), Y(e.im), 5.5, 0, 2 * Math.PI); ctx.fillStyle = COL.roll; ctx.fill(); ctx.strokeStyle = "#fff"; ctx.lineWidth = 1.5; ctx.stroke(); });
+}
+
+// ======================================================================
+// 3-D satellite (orthographic, painter's algorithm)
+// ======================================================================
+function box(hx, hy, hz, cy = 0) {
+  const v = []; for (const x of [-hx, hx]) for (const y of [-hy, hy]) for (const z of [-hz, hz]) v.push([x, y + cy, z]);
+  return [[0, 1, 3, 2], [4, 5, 7, 6], [0, 1, 5, 4], [2, 3, 7, 6], [0, 2, 6, 4], [1, 3, 7, 5]].map(f => f.map(i => v[i]));
+}
+const BODY = box(0.6, 0.6, 0.6), PANELS = box(0.45, 0.95, 0.03, 1.65).concat(box(0.45, 0.95, 0.03, -1.65));
+function rotM(ph, th, ps) {
+  const Rx = [[1, 0, 0], [0, Math.cos(ph), -Math.sin(ph)], [0, Math.sin(ph), Math.cos(ph)]];
+  const Ry = [[Math.cos(th), 0, Math.sin(th)], [0, 1, 0], [-Math.sin(th), 0, Math.cos(th)]];
+  const Rz = [[Math.cos(ps), -Math.sin(ps), 0], [Math.sin(ps), Math.cos(ps), 0], [0, 0, 1]];
+  return matmul(Rz, matmul(Ry, Rx));
+}
+const AZ = -55 * Math.PI / 180, EL = 22 * Math.PI / 180;
+function view(p) {                   // world → (screen x, screen y, depth toward viewer)
+  const x1 = p[0] * Math.cos(AZ) - p[1] * Math.sin(AZ), y1 = p[0] * Math.sin(AZ) + p[1] * Math.cos(AZ);
+  const sx = y1 * -1, depth0 = x1;    // looking along +x1 after azimuth
+  const sy = p[2] * Math.cos(EL) - depth0 * Math.sin(EL), depth = depth0 * Math.cos(EL) + p[2] * Math.sin(EL);
+  return [-sx, sy, -depth];
+}
+function draw3d(cv, ang) {
+  const { ctx, w, h } = setupCanvas(cv);
+  const S = Math.min(w, h) / 6.2, cxp = w / 2, cyp = h / 2 + 10;
+  const P2 = p => { const v = view(p); return [cxp + v[0] * S, cyp - v[1] * S, v[2]]; };
+  // reference frame
+  ctx.setLineDash([3, 4]); ctx.strokeStyle = "#c9c5bb"; ctx.lineWidth = 1;
+  for (const e of [[1, 0, 0], [0, 1, 0], [0, 0, 1]]) { const a = P2(e.map(v => -2.6 * v)), b = P2(e.map(v => 2.6 * v)); ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.stroke(); }
+  ctx.setLineDash([]);
+  const R = rotM(ang[0], ang[1], ang[2]);
+  const faces = [];
+  const light = [0.4, -0.5, 0.75];
+  const addFaces = (set, base) => set.forEach(f => {
+    const wv = f.map(p => matvec(R, p)), sp = wv.map(P2);
+    const depth = sp.reduce((s, q) => s + q[2], 0) / 4;
+    const u = wv[1].map((v, i) => v - wv[0][i]), v2 = wv[2].map((v, i) => v - wv[0][i]);
+    const nrm = [u[1] * v2[2] - u[2] * v2[1], u[2] * v2[0] - u[0] * v2[2], u[0] * v2[1] - u[1] * v2[0]];
+    const nl = Math.hypot(...nrm) || 1, sh = Math.abs(nrm.reduce((s, c, i) => s + c * light[i], 0) / nl);
+    faces.push({ sp, depth, base, sh });
+  });
+  addFaces(BODY, [217, 214, 207]); addFaces(PANELS, [36, 70, 122]);
+  faces.sort((a, b) => b.depth - a.depth);
+  faces.forEach(f => {
+    const k = 0.62 + 0.38 * f.sh, c = f.base.map(v => Math.round(Math.min(255, v * k)));
+    ctx.fillStyle = `rgb(${c})`; ctx.strokeStyle = "#2b2a28"; ctx.lineWidth = 0.8;
+    ctx.beginPath(); f.sp.forEach((q, i) => i ? ctx.lineTo(q[0], q[1]) : ctx.moveTo(q[0], q[1])); ctx.closePath(); ctx.fill(); ctx.stroke();
+  });
+  const o = P2([0, 0, 0]);
+  [[1, 0, 0], [0, 1, 0], [0, 0, 1]].forEach((e, i) => {
+    const tip = P2(matvec(R, e).map(v => v * (i === 1 ? 3.0 : 2.3)));
+    ctx.strokeStyle = COL[AXN[i]]; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(o[0], o[1]); ctx.lineTo(tip[0], tip[1]); ctx.stroke();
+    ctx.fillStyle = COL[AXN[i]]; ctx.font = "bold 15px Arial"; ctx.textAlign = "center"; ctx.fillText(SYM[i], tip[0] + (tip[0] - o[0]) * 0.08, tip[1] + (tip[1] - o[1]) * 0.08);
+  });
+}
+
+// ======================================================================
+// UI wiring
+// ======================================================================
+const $ = id => document.getElementById(id);
+const state = { ctrl: "PID", sim: null, k: 0, playing: false };
+const pairs = ["kp", "ki", "kd", "ca", "dist", "phi0", "th0", "psi0", "T"];
+function setVal(id, v) { $(id).value = v; $(id + "N").value = v; }
+function val(id) { return parseFloat($(id).value); }
+pairs.forEach(id => {
+  $(id).addEventListener("input", () => { $(id + "N").value = $(id).value; update(); });
+  $(id + "N").addEventListener("change", () => { $(id).value = $(id + "N").value; $(id + "N").value = $(id).value; update(); });
+});
+function applyDefaults() {
+  const [p, i, d] = DEFAULTS[state.ctrl]; setVal("kp", p); setVal("ki", i); setVal("kd", d);
+  $("rowKi").classList.toggle("off", !state.ctrl.includes("I"));
+  $("rowKd").classList.toggle("off", !state.ctrl.includes("D"));
+}
+document.querySelectorAll("#ctrlSeg button").forEach(b => b.addEventListener("click", () => {
+  document.querySelectorAll("#ctrlSeg button").forEach(x => x.classList.toggle("on", x === b));
+  state.ctrl = b.dataset.c; applyDefaults(); update();
+}));
+$("reset").addEventListener("click", () => { applyDefaults(); update(); });
+$("out").addEventListener("change", update);
+document.querySelectorAll("#tabs button").forEach(b => b.addEventListener("click", () => {
+  document.querySelectorAll("#tabs button").forEach(x => x.classList.toggle("on", x === b));
+  document.querySelectorAll(".tab").forEach(t => t.classList.toggle("on", t.id === "tab-" + b.dataset.t));
+  redrawVisible();
+}));
+
+function eigText(ev) {
+  return ev.map(e => e.im === 0 ? fmt(e.re, 4) : `${fmt(e.re, 4)} ${e.im < 0 ? "−" : "+"} j${fmt(Math.abs(e.im), 4)}`).join(",&nbsp; ");
+}
+function verdictHTML(v) { return `<span class="verdict ${v}">${v === "MARGINAL" ? "MARGINALLY STABLE" : v}</span>`; }
+function matHTML(M, rl, cl) {
+  let s = "<table class='mat'><tr><th></th>" + cl.map(c => `<th>${c}</th>`).join("") + "</tr>";
+  M.forEach((r, i) => { s += `<tr><th style="text-align:left">${rl[i]}</th>` + r.map(v => Math.abs(v) < 1e-12 ? "<td class='z'>0</td>" : `<td>${fmt(v, 4)}</td>`).join("") + "</tr>"; });
+  return s + "</table>";
+}
+function polyHTML(p) {
+  p = trimLead(p); const n = p.length - 1; let s = "";
+  p.forEach((a, i) => {
+    if (Math.abs(a) < 1e-12) return;
+    const k = n - i, mag = Math.abs(a), showMag = Math.abs(mag - 1) > 1e-9 || k === 0;
+    const term = (showMag ? fmt(mag, 4) : "") + (k > 1 ? `<i>s</i><sup>${k}</sup>` : k === 1 ? "<i>s</i>" : "");
+    s += (a < 0 ? (s ? " − " : "−") : (s ? " + " : "")) + term;
+  });
+  return s || "0";
+}
+
+function update() {
+  const ctrl = state.ctrl, Kp = val("kp"), Ki = val("ki"), Kd = val("kd");
+  const P = buildPlant(val("ca"));
+  const cl = closedLoop(P, ctrl, Kp, Ki, Kd);
+  const x0 = [val("phi0") * Math.PI / 180, 0.1, val("th0") * Math.PI / 180, 0, val("psi0") * Math.PI / 180, 0.1];
+  const d = [val("dist"), val("dist"), val("dist")];
+  state.sim = simulate(P, cl, x0, d, val("T"));
+  state.k = 0; $("scrub").max = state.sim.t.length - 1; $("scrub").value = 0;
+  const eA = eigs(P.A), eC = eigs(cl.Acl), vC = verdict(eC);
+  const gains = `K<sub>P</sub> = ${fmt(Kp)}` + (ctrl.includes("I") ? `, K<sub>I</sub> = ${fmt(Ki)}` : "") + (ctrl.includes("D") ? `, K<sub>D</sub> = ${fmt(Kd)}` : "");
+  state.title = `${ctrl} control (${gains})`;
+  $("status").innerHTML = `<b>${ctrl} control</b> (${gains}): closed loop ${verdictHTML(vC)}`;
+
+  // --- response tab text
+  const S = state.sim, last = S.X[S.X.length - 1];
+  if (val("dist") > 0 && vC === "STABLE") {
+    const f = ANG.map(i => (last[i] * 180 / Math.PI).toFixed(2).replace("-0.00", "0.00"));
+    $("ssMsg").innerHTML = `Final angles (t = ${S.t[S.t.length - 1].toFixed(0)}): φ = ${f[0]}°, θ = ${f[1]}°, ψ = ${f[2]}° — ` +
+      (ctrl.includes("I") ? "integral action drives the offset to zero." : "<b>nonzero offset</b>: no integral action to reject the constant disturbance.");
+  } else $("ssMsg").innerHTML = "";
+
+  // --- stability tab
+  $("eigA").innerHTML = `<h4>Eigenvalues of A (open loop)</h4><div class="eigs">${eigText(eA)}</div>
+     <div>→ max Re(λ) = ${fmt(Math.max(...eA.map(e => e.re)), 4)}: ${verdictHTML(verdict(eA))}</div>`;
+  $("lawCard").innerHTML = ctrl === "P" ? `<h4>P control in state form</h4><div class="math">ẋ = (A + BK) x, &nbsp; K = −K<sub>P</sub> C</div>`
+    : ctrl === "PD" ? `<h4>PD control in state form</h4><div class="math">ẋ = (A + BK) x, &nbsp; K = −(K<sub>P</sub> C + K<sub>D</sub> C<sub>d</sub>)</div>`
+    : `<h4>${ctrl} control in state form (augmented with z = ∫e dt)</h4><div class="math">[ẋ; ż] = (A<sub>a</sub> + B<sub>a</sub>K) [x; z], &nbsp; K = [ −(K<sub>P</sub>C + K<sub>D</sub>C<sub>d</sub>) &nbsp; K<sub>I</sub> I ]</div>`;
+  $("lawCard").innerHTML += `<div class="note">K is just the controller law written as a matrix (u = K<sub>P</sub>(r − Cx) …), so stability = eigenvalues of A + BK.</div>`;
+  $("eigCL").innerHTML = `<h4>Eigenvalues of A + BK (closed loop)</h4><div class="eigs">${eigText(eC)}</div>
+     <div>→ max Re(λ) = ${fmt(Math.max(...eC.map(e => e.re)), 4)}: ${verdictHTML(vC)}</div>`;
+  const xl = ["x1 φ", "x2 φ̇", "x3 θ", "x4 θ̇", "x5 ψ", "x6 ψ̇"].concat(cl.n === 9 ? ["z1 ∫e<sub>φ</sub>", "z2 ∫e<sub>θ</sub>", "z3 ∫e<sub>ψ</sub>"] : []);
+  const xs = xl.map(s => s.split(" ")[0]);
+  $("Kmat").innerHTML = matHTML(cl.K, ["u<sub>φ</sub>", "u<sub>θ</sub>", "u<sub>ψ</sub>"], xs);
+  $("AclTitle").innerHTML = cl.n === 9 ? "A<sub>a</sub> + B<sub>a</sub>K (9 × 9) =" : "A + BK (6 × 6) =";
+  $("Amat").innerHTML = matHTML(cl.Acl, xl, xs);
+  state.poles = [eA, eC];
+
+  // --- T(s) & Routh tab
+  const j = parseInt($("out").value), Y = ["Φ", "Θ", "Ψ"][j];
+  const gcs = { P: "K<sub>P</sub>", PI: `K<sub>P</sub> + <span class="frac"><span>K<sub>I</sub></span><span><i>s</i></span></span>`,
+                PD: "K<sub>P</sub> + K<sub>D</sub><i>s</i>", PID: `K<sub>P</sub> + <span class="frac"><span>K<sub>I</sub></span><span><i>s</i></span></span> + K<sub>D</sub><i>s</i>` }[ctrl];
+  $("gcLine").innerHTML = `<i>G<sub>c</sub></i>(<i>s</i>) = ${gcs} &nbsp;&nbsp; <span style="font-size:16px">(${gains})</span>`;
+  const tf = transferFunction(P, ctrl, Kp, Ki, Kd, j);
+  const lc = tf.den[0], num = tf.num.map(v => v / lc), den = tf.den.map(v => v / lc);
+  let denR = den;
+  if (num.every(v => Math.abs(v) < 1e-12)) {
+    $("tfLine").innerHTML = "<b>T(s) = 0</b>: with zero gain there is no feedback path.";
+  } else {
+    $("tfLine").innerHTML = `<i>T</i>(<i>s</i>) = <span class="frac"><span>${Y}(<i>s</i>)</span><span><i>R</i>(<i>s</i>)</span></span> = <span class="frac"><span>${polyHTML(num)}</span><span>${polyHTML(den)}</span></span>`;
+  }
+  $("ceLine").innerHTML = `Characteristic equation: &nbsp;${polyHTML(denR)} = 0`;
+  const R = routh(denR), n = denR.length - 1;
+  let tb = "<table class='routh'>";
+  R.disp.forEach((row, r) => {
+    tb += `<tr><th><i>s</i><sup>${n - r}</sup></th>` + row.map((c, ci) => `<td class="${ci === 0 ? "first" : ""}">${c.txt}</td>`).join("") +
+      `<td class="sg">sign: ${R.signs[r] > 0 ? "+" : R.signs[r] < 0 ? "−" : "0"}</td><td class="nt">${R.notes[r] || ""}</td></tr>`;
+  });
+  $("routh").innerHTML = tb + "</table>";
+  const ch = R.changes;
+  let msg, tfV;
+  if (ch > 0) { tfV = "UNSTABLE"; msg = `The first column has <b>${ch} sign change${ch > 1 ? "s" : ""}</b>, so T(s) has ${ch} pole${ch > 1 ? "s" : ""} in the right-half plane → by the Routh–Hurwitz criterion the closed loop is ${verdictHTML("UNSTABLE")}.`; }
+  else if (R.zeroRow) { tfV = "MARGINAL"; msg = `The first column has <b>no sign changes</b>, but a row of zeros appeared, so T(s) has poles on the jω-axis → the closed loop is only ${verdictHTML("MARGINAL")} (it keeps oscillating instead of settling).`; }
+  else { tfV = "STABLE"; msg = `The first column has <b>no sign changes</b>, so all poles of T(s) are in the left-half plane → by the Routh–Hurwitz criterion the closed loop is ${verdictHTML("STABLE")}.`; }
+  $("concl").innerHTML = msg;
+  const hidden = cl.n - n;
+  $("hidden").innerHTML = hidden > 0 ? `Note: ${hidden} closed-loop pole(s) belonging to the other axes cancel out of this T(s), so the Routh array is order ${n}, not ${cl.n}. The eigenvalues of A+BK (Stability tab) cover the whole satellite.` +
+    (tfV !== vC ? ` <b class="bad">⚠ Careful: the whole satellite is ${vC === "MARGINAL" ? "MARGINALLY STABLE" : vC}</b> — the problem is in a mode this output cannot see.` : "") : "";
+  redrawVisible();
+}
+
+function redrawVisible() {
+  const S = state.sim; if (!S) return;
+  const deg = S.X.map(x => ANG.map(i => x[i] * 180 / Math.PI));
+  const tab = document.querySelector("#tabs button.on").dataset.t;
+  if (tab === "resp") {
+    linePlot($("cvAng"), S.t, AXN.map((a, i) => ({ y: deg.map(r => r[i]), color: COL[a], label: `${a} ${SYM[i]}` })), { ylabel: "angle (deg)", clip: 200, tmax: val("T") });
+    linePlot($("cvU"), S.t, AXN.map((a, i) => ({ y: S.U.map(u => u[i]), color: COL[a], label: `u${SYM[i]}` })), { ylabel: "control input u", clip: 50, tmax: val("T") });
+  } else if (tab === "stab") polePlot($("cvPoles"), state.poles[0], state.poles[1]);
+  else if (tab === "anim") drawAnimFrame();
+}
+function drawAnimFrame() {
+  const S = state.sim, k = Math.min(state.k, S.t.length - 1), x = S.X[k];
+  const ang = ANG.map(i => x[i]);
+  draw3d($("cv3d"), ang);
+  const deg = S.X.map(xx => ANG.map(i => xx[i] * 180 / Math.PI));
+  linePlot($("cvAnimAng"), S.t, AXN.map((a, i) => ({ y: deg.map(r => r[i]), color: COL[a], label: `${a} ${SYM[i]}` })), { ylabel: "angle (deg)", clip: 200, cursor: S.t[k], tmax: val("T") });
+  const dd = ang.map(v => (v * 180 / Math.PI).toFixed(1).padStart(7));
+  $("readout").innerHTML = `<b>${state.title}</b><br><span class="mono">t = ${S.t[k].toFixed(1).padStart(5)}   φ = ${dd[0]}°   θ = ${dd[1]}°   ψ = ${dd[2]}°</span>`;
+  $("scrub").value = k;
+}
+let lastTs = null;
+function loop(ts) {
+  if (!state.playing) { lastTs = null; return; }
+  if (lastTs !== null) {
+    const S = state.sim, dtSim = (ts - lastTs) / 1000 * parseFloat($("speed").value);
+    const step = S.t[1] - S.t[0];
+    state.k += dtSim / step;
+    if (state.k >= S.t.length - 1) { state.k = S.t.length - 1; state.playing = false; $("play").textContent = "▶ Play"; }
+  }
+  lastTs = ts; const k0 = state.k; state.k = Math.floor(k0); drawAnimFrame(); state.k = k0;
+  if (state.playing) requestAnimationFrame(loop);
+}
+$("play").addEventListener("click", () => {
+  if (state.playing) { state.playing = false; $("play").textContent = "▶ Play"; return; }
+  if (state.k >= state.sim.t.length - 1) state.k = 0;
+  state.playing = true; $("play").textContent = "❚❚ Pause"; requestAnimationFrame(loop);
+});
+$("restart").addEventListener("click", () => { state.k = 0; drawAnimFrame(); });
+$("scrub").addEventListener("input", () => { state.k = parseInt($("scrub").value); drawAnimFrame(); });
+window.addEventListener("resize", redrawVisible);
+
+// init
+setVal("ca", 0.8086); setVal("dist", 0.1); setVal("phi0", 45); setVal("th0", 30); setVal("psi0", 45); setVal("T", 30);
+applyDefaults(); update();
+</script>
+</body>
+</html>

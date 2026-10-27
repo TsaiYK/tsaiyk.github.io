@@ -22,6 +22,7 @@
         <li><a href="#research">Research</a></li>
         <li><a href="#publications">Publications</a></li>
         <li><a href="#teaching">Teaching</a></li>
+        <li><a href="#tools">Software &amp; Tools</a></li>
         <li><a href="#join">Join Us</a></li>
         <li><a href="#contact" class="nav-cta">Contact</a></li>
       </ul>
@@ -38,6 +39,7 @@
     <a href="#research"       onclick="closeNav()">Research</a>
     <a href="#publications"   onclick="closeNav()">Publications</a>
     <a href="#teaching"        onclick="closeNav()">Teaching</a>
+    <a href="#tools"          onclick="closeNav()">Software &amp; Tools</a>
     <a href="#join"           onclick="closeNav()">Join Us</a>
     <a href="#contact"        onclick="closeNav()">Contact</a>
   </div>
@@ -639,8 +641,41 @@
     </div>
   </section>
 
+  <!-- SOFTWARE & TOOLS -->
+  <section id="tools" class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow">Open for everyone</p>
+        <h2 class="section-title">Software &amp; Tools</h2>
+        <p class="section-desc">Software and computational tools developed in the DISO Lab, free for anyone to use in research and teaching.</p>
+      </div>
+
+      <div class="research-grid">
+
+        <div class="research-card">
+          <div class="teaching-header">
+            <span class="join-badge">Web App</span>
+            <span class="teaching-term">ME 4351 · Fall 2026</span>
+          </div>
+          <h3>Satellite Attitude Control: P / PI / PD / PID</h3>
+          <p class="teaching-role">Interactive simulator · Runs in your browser</p>
+          <p class="teaching-desc">An interactive tool for exploring feedback control of a 3-DoF linearized satellite attitude model (roll–yaw dynamics from Tsai &amp; Malak, ASME LDSC 2025, with an added pitch axis). Developed for ME 4351 Control Systems at Texas State University.</p>
+          <ul class="teaching-topics">
+            <li><strong>Features:</strong> tune P, PI, PD, and PID gains and see the attitude response, control inputs, closed-loop eigenvalues of A + BK, transfer function T(s) with its Routh array, and a 3-D animation of the satellite.</li>
+            <li><strong>Requirements:</strong> none. Everything runs locally in the browser and works offline once downloaded.</li>
+          </ul>
+          <div class="join-btn-group">
+            <a href="tools/satellite_gui.html" target="_blank" class="btn btn-primary join-btn">Launch Tool →</a>
+            <a href="tools/satellite_gui.html" download class="btn btn-ghost join-btn">Download HTML</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <!-- JOIN US -->
-  <section id="join" class="section section-alt">
+  <section id="join" class="section">
     <div class="container">
       <div class="section-header">
         <p class="section-eyebrow">Join the lab</p>
