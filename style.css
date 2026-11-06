@@ -157,6 +157,11 @@ strong { font-weight: 600; }
 .research-card p { font-size: 0.9rem; color: var(--ink-2); line-height: 1.65; }
 .rc-link { display: inline-block; margin-top: 1rem; font-size: 13px; font-weight: 500; color: var(--accent); }
 .rc-link:hover { color: var(--accent-dk); text-decoration: underline; }
+/* research areas: one card per row, text beside figure */
+.research-list { display: flex; flex-direction: column; gap: 1.5rem; }
+.rc-row { display: grid; grid-template-columns: 1fr 1.1fr; gap: 2rem; align-items: center; }
+.rc-figure { width: 100%; height: auto; display: block; border-radius: 8px; background: #fff; }
+@media (max-width: 900px) { .rc-row { grid-template-columns: 1fr; gap: 1.25rem; } }
 
 /* === PUBLICATIONS === */
 .pub-filters { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2rem; }
