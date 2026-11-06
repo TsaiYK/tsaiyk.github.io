@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Publications | DISO Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/png" href="images/diso_lab_logo_v2.png" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">DISO Lab</a>
+      <ul class="nav-links">
+        <li><a href="index.html#news">News</a></li>
+        <li><a href="index.html#team">Team</a></li>
+        <li><a href="index.html#research">Research</a></li>
+        <li><a href="index.html#publications" class="active">Publications</a></li>
+        <li><a href="index.html#teaching">Teaching</a></li>
+        <li><a href="index.html#tools">Software &amp; Tools</a></li>
+        <li><a href="index.html#join">Join Us</a></li>
+        <li><a href="index.html#contact" class="nav-cta">Contact</a></li>
+      </ul>
+      <button class="nav-hamburger" aria-label="Toggle menu" onclick="toggleNav()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MOBILE NAV -->
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="index.html#news"         onclick="closeNav()">News</a>
+    <a href="index.html#team"         onclick="closeNav()">Team</a>
+    <a href="index.html#research"     onclick="closeNav()">Research</a>
+    <a href="index.html#publications" onclick="closeNav()">Publications</a>
+    <a href="index.html#teaching"     onclick="closeNav()">Teaching</a>
+    <a href="index.html#tools"        onclick="closeNav()">Software &amp; Tools</a>
+    <a href="index.html#join"         onclick="closeNav()">Join Us</a>
+    <a href="index.html#contact"      onclick="closeNav()">Contact</a>
+  </div>
+
+  <!-- PUBLICATIONS -->
+  <section class="section">
+    <div class="container">
+      <a href="index.html#publications" class="btn btn-ghost" style="margin-bottom: 2rem; display: inline-flex;">← Back to Key Publications</a>
+
+      <div class="section-header">
+        <p class="section-eyebrow">Our work</p>
+        <h2 class="section-title">Publications</h2>
+        <p class="section-desc">Selected journal articles and conference papers from the lab. To see the complete and most up-to-date list, please visit my Google Scholar.</p>
+        <a href="https://scholar.google.com/citations?hl=en&authuser=3&user=FnJgFQEAAAAJ"
+           target="_blank" class="btn btn-primary" style="margin-top: 1rem;">
+          Google Scholar
+        </a>
+      </div>
+      <div class="pub-filters">
+        <button class="pf-btn active" onclick="filterPubs('all', this)">All</button>
+        <button class="pf-btn" onclick="filterPubs('digitaltwin', this)">Digital Twin</button>
+        <button class="pf-btn" onclick="filterPubs('ccd', this)">CCD</button>
+        <button class="pf-btn" onclick="filterPubs('optimization', this)">Optimization</button>
+      </div>
+
+      <div class="pub-list" id="pub-list">
+
+        <article class="pub-item" data-tag="digitaltwin">
+          <div class="pub-media">
+            <img src="images/FullVehicleActiveSuspension.png" alt="Full vehicle active suspension system" />
+          </div>
+          <div class="pub-body">
+            <div class="pub-meta">
+              <span class="pub-tag">Digital Twin</span>
+              <span class="pub-year">2026</span>
+            </div>
+            <h3 class="pub-title">Reinforcement Learning-Based Control Co-Design of Digital Twin-Enabled Full-Vehicle Active Suspension Systems</h3>
+            <p class="pub-authors"><strong>Ying-Kuan Tsai</strong>, Yi-Ping Chen, Vispi Karkaria, Wei Chen</p>
+            <p class="pub-venue">Structural and Multidisciplinary Optimization (Special Issue on Reduced Order Modeling, Generative AI, and SciML in Digital Twins) · April 2026</p>
+            <div class="pub-links">
+              <a href="https://link.springer.com/article/10.1007/s00158-026-04304-y" target="_blank" class="pub-link">Paper</a>
+              <a href="https://github.com/TsaiYK/ControlCoDesign_DigitalTwin_RL_FullVehicleActiveSuspension" target="_blank" class="pub-link">Code</a>
+            </div>
+          </div>
+          
+        </article>
+
+        <article class="pub-item" data-tag="ccd">
+          <div class="pub-media">
+            <img src="images/DT_CCD_RL_Animation_advertise.gif" alt="Digital Twin CCD RL animation" />
+          </div>
+          <div class="pub-body">
+            <div class="pub-meta">
+              <span class="pub-tag">CCD</span>
+              <span class="pub-year">2026</span>
+            </div>
+            <h3 class="pub-title">Digital Twin-Enabled Multi-Generation Control Co-Design with Deep Reinforcement Learning</h3>
+            <p class="pub-authors"><strong>Ying-Kuan Tsai</strong>, Vispi Karkaria, Yi-Ping Chen, Wei Chen</p>
+            <p class="pub-venue">Journal of Mechanical Design · July 2026</p> 
+            <p class="pub-authors"><strong>(DAC Paper of Distinction at IDETC2025)<strong></p>
+            <div class="pub-links">
+              <a href="https://doi.org/10.1115/1.4072056" target="_blank" class="pub-link">Paper</a>
+              <a href="https://github.com/TsaiYK/ControlCoDesign_DigitalTwin_RL" target="_blank" class="pub-link">Code</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="pub-item" data-tag="optimization">
+          <div class="pub-media">
+            <img src="images/HeteroscedasticBO.png" alt="Adaptive uncertainty-aware material-process co-design for in-space manufacturing" />
+          </div>
+          <div class="pub-body">
+            <div class="pub-meta">
+              <span class="pub-tag">Optimization</span>
+              <span class="pub-year">2026</span>
+            </div>
+            <h3 class="pub-title">Adaptive Uncertainty Aware Material-Process Co-Design for Sustainable In-Space Manufacturing of Recycled Composites</h3>
+            <p class="pub-authors"><strong>Ying-Kuan Tsai</strong>†, Christian A. Fernandez†, Ryan Daniel Brahan, Anupam Ajit Deshpande, Caleb Isaiah Smith, Yayue Pan, Wei Chen</p>
+            <small>(†Indicates Equal Contribution)</small>
+            <p class="pub-venue">ASME IDETC-CIE Conference · Houston, Texas · August 2026 (accepted)</p>
+          </div>
+        </article>
+
+        <article class="pub-item" data-tag="ccd">
+          <div class="pub-media">
+            <img src="images/PO_CCD_JMD.png" alt="Parametric multi-objective CCD" />
+          </div>
+          <div class="pub-body">
+            <div class="pub-meta">
+              <span class="pub-tag">CCD</span>
+              <span class="pub-year">2026</span>
+            </div>
+            <h3 class="pub-title">Parametric Multi-Objective Optimization for Simultaneous and Nested Control Co-Design Formulations with Tube-Based Model Predictive Controllers</h3>
+            <p class="pub-authors"><strong>Ying-Kuan Tsai</strong>, Richard J Malak</p>
+            <p class="pub-venue">Journal of Mechanical Design · April 2026</p>
+            <div class="pub-links">
+              <a href="https://asmedigitalcollection.asme.org/mechanicaldesign/article/148/11/111701/1232460" target="_blank" class="pub-link">Paper</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="pub-item" data-tag="digitaltwin">
+          <div class="pub-media">
+            <img src="images/RMPC_concept.png" alt="Uncertainty-aware digital twin concept" />
+          </div>
+          <div class="pub-body">
+            <div class="pub-meta">
+              <span class="pub-tag">Digital Twin</span>
+              <span class="pub-year">2026</span>
+            </div>
+            <h3 class="pub-title">Uncertainty-Aware Digital Twins: Robust Model Predictive Control Using Time-Series Deep Quantile Learning</h3>
+            <p class="pub-authors">Yi-Ping Chen, <strong>Ying-Kuan Tsai</strong>, Vispi Karkaria, Wei Chen</p>
+            <p class="pub-venue">Journal of Mechanical Design · February 2026</p>
+            <div class="pub-links">
+              <a href="https://asmedigitalcollection.asme.org/mechanicaldesign/article-abstract/148/2/021702/1219466/Uncertainty-Aware-Digital-Twins-Robust-Model" target="_blank" class="pub-link">Paper</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="pub-item" data-tag="digitaltwin">
+          <div class="pub-media">
+            <img src="images/MPC_AM_advertise.gif" alt="MPC additive manufacturing animation" />
+          </div>
+          <div class="pub-body">
+            <div class="pub-meta">
+              <span class="pub-tag">Digital Twin</span>
+              <span class="pub-year">2026</span>
+            </div>
+            <h3 class="pub-title">Real-Time Decision-Making for Digital Twin in Additive Manufacturing with Model Predictive Control Using Time-Series Deep Neural Networks</h3>
+            <p class="pub-authors">Yi-Ping Chen, Vispi Karkaria, <strong>Ying-Kuan Tsai</strong>, Faith Rolark, Daniel Quispe, Robert X Gao, Jian Cao, Wei Chen</p>
+            <p class="pub-venue">Journal of Manufacturing Systems · August 2026</p>
+            <p class="pub-authors"><strong>(Manufacturing Systems Outstanding Paper at NAMRC53 in 2025)<strong></p>
+            <div class="pub-links">
+              <a href="https://www.sciencedirect.com/science/article/pii/S0278612525000706" target="_blank" class="pub-link">Paper</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="pub-item" data-tag="digitaltwin">
+          <div class="pub-media">
+            <img src="images/Roadmap_smart_mfg_DT.png" alt="Roadmap on AI and ML for smart manufacturing digital twin" />
+          </div>
+          <div class="pub-body">
+            <div class="pub-meta">
+              <span class="pub-tag">Digital Twin</span>
+              <span class="pub-year">2026</span>
+            </div>
+            <h3 class="pub-title">Physics-Based Predictive Control and Real-Time Decision-Making for Digital Twin–Enabled Autonomous Manufacturing</h3>
+            <p class="pub-authors">Wei Chen, Vispi Karkaria, Yi-Ping Chen, <strong>Ying-Kuan Tsai</strong></p>
+            <p class="pub-venue">In Roadmap on AI and ML for Smart Manufacturing, ed. Jay Lee (Machine Learning: Engineering) · March 2026</p>
+            <div class="pub-links">
+              <a href="https://iopscience.iop.org/article/10.1088/3049-4761/ae5967/meta" target="_blank" class="pub-link">Paper</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="pub-item" data-tag="digitaltwin">
+          <div class="pub-media">
+            <img src="images/REW.png" alt="Adaptive digital twin of sheet metal forming" />
+          </div>
+          <div class="pub-body">
+            <div class="pub-meta">
+              <span class="pub-tag">Digital Twin</span>
+              <span class="pub-year">2026</span>
+            </div>
+            <h3 class="pub-title">Adaptive Digital Twin of Sheet Metal Forming via Proper Orthogonal Decomposition-Based Koopman Operator with Model Predictive Control</h3>
+            <p class="pub-authors">Yi-Ping Chen, Derick Suarez, <strong>Ying-Kuan Tsai</strong>, Vispi Karkaria, Guanzhong Hu, Zihan Chen, Ping Guo, Jian Cao, Wei Chen</p>
+            <p class="pub-venue">Journal of Manufacturing Systems · June 2026</p>
+            <div class="pub-links">
+              <a href="https://www.sciencedirect.com/science/article/pii/S0278612526000907" target="_blank" class="pub-link">Paper</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="pub-item" data-tag="optimization">
+          <div class="pub-media">
+            <img src="images/UNiCO.png" alt="UNiCO-AM co-design for additive manufacturing" />
+          </div>
+          <div class="pub-body">
+            <div class="pub-meta">
+              <span class="pub-tag">Optimization</span>
+              <span class="pub-year">2026</span>
+            </div>
+            <h3 class="pub-title">UNiCO-AM: Uncertainty-aware Neural Co-design for Additive Manufacturing via an Attention-based Spatio-Temporal Neural Operator and Bayesian Optimization</h3>
+            <p class="pub-authors">Vispi Karkaria, <strong>Ying-Kuan Tsai</strong>, Yi-Ping Chen, Doksoo Lee, Jian Cao, Wei Chen</p>
+            <p class="pub-venue">Manufacturing Letters (accepted) · NAMRC 54, University Park, PA · June 2026</p>
+          </div>
+        </article>
+
+        <article class="pub-item" data-tag="digitaltwin">
+          <div class="pub-media">
+            <img src="images/DT.png" alt="Digital twin framework" />
+          </div>
+          <div class="pub-body">
+            <div class="pub-meta">
+              <span class="pub-tag">Optimization</span>
+              <span class="pub-year">2025</span>
+            </div>
+            <h3 class="pub-title">An Optimization-Centric Review on Integrating Artificial Intelligence and Digital Twin Technologies in Manufacturing</h3>
+            <p class="pub-authors">Vispi Karkaria, <strong>Ying-Kuan Tsai</strong>, Yi-Ping Chen, Wei Chen</p>
+            <p class="pub-venue">Engineering Optimization · January 2025</p>
+            <div class="pub-links">
+              <a href="https://www.tandfonline.com/doi/abs/10.1080/0305215X.2024.2434201" target="_blank" class="pub-link">Paper</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="pub-item" data-tag="ccd">
+          <div class="pub-media">
+            <img src="images/StochasticTubeCCD.png" alt="Stochastic tube-based control co-design" />
+          </div>
+          <div class="pub-body">
+            <div class="pub-meta">
+              <span class="pub-tag">CCD</span>
+              <span class="pub-year">2025</span>
+            </div>
+            <h3 class="pub-title">Control co-design with performance-robustness trade-off using tube-based stochastic model predictive control</h3>
+            <p class="pub-authors"><strong>Ying-Kuan Tsai</strong>, Richard J Malak</p>
+            <p class="pub-venue">ASME Letters in Dynamic Systems and Control (Special Section: Control Co-Design) · July 2025</p>
+            <div class="pub-links">
+              <a href="https://asmedigitalcollection.asme.org/lettersdynsys/article-abstract/5/3/030903/1212365/Control-Co-Design-With-Performance-Robustness" target="_blank" class="pub-link">Paper</a>
+              <a href="https://github.com/TsaiYK/CCDTubeStochasticMPC" target="_blank" class="pub-link">Code</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="pub-item" data-tag="optimization">
+          <div class="pub-media">
+            <img src="images/BayesianCHT.png" alt="Bayesian constraint-handling technique for parametric optimization" />
+          </div>
+          <div class="pub-body">
+            <div class="pub-meta">
+              <span class="pub-tag">Optimization</span>
+              <span class="pub-year">2024</span>
+            </div>
+            <h3 class="pub-title">Surrogate‑Assisted Constraint‑Handling Technique for Parametric Multi‑Objective Optimization</h3>
+            <p class="pub-authors"><strong>Ying-Kuan Tsai</strong>, Richard J Malak</p>
+            <p class="pub-venue">Structural and Multidisciplinary Optimization · September 2024</p>
+            <div class="pub-links">
+              <a href="https://link.springer.com/article/10.1007/s00158-024-03859-y" target="_blank" class="pub-link">Paper</a>
+              <a href="https://github.com/TsaiYK/BayesianCHT" target="_blank" class="pub-link">Code</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="pub-item" data-tag="ccd">
+          <div class="pub-media">
+            <img src="images/CCD_SolA_numerical_GIF.gif" alt="Robust CCD tube-based MPC" />
+          </div>
+          <div class="pub-body">
+            <div class="pub-meta">
+              <span class="pub-tag">CCD</span>
+              <span class="pub-year">2023</span>
+            </div>
+            <h3 class="pub-title">Robust Control Co-Design Using Tube-Based Model Predictive Control</h3>
+            <p class="pub-authors"><strong>Ying-Kuan Tsai</strong>, Richard J Malak</p>
+            <p class="pub-venue">Proceedings of American Control Conference · July 2023</p>
+            <div class="pub-links">
+              <a href="https://ieeexplore.ieee.org/abstract/document/10156303" target="_blank" class="pub-link">Paper</a>
+              <a href="https://github.com/TsaiYK/RobustCCDTubeMPC" target="_blank" class="pub-link">Code</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="pub-item" data-tag="optimization">
+          <div class="pub-media">
+            <img src="images/spNLPC.png" alt="Approximate explicit model predictive controller design" />
+          </div>
+          <div class="pub-body">
+            <div class="pub-meta">
+              <span class="pub-tag">Optimization</span>
+              <span class="pub-year">2022</span>
+            </div>
+            <h3 class="pub-title">Design of approximate explicit model predictive controller using parametric optimization</h3>
+            <p class="pub-authors"><strong>Ying-Kuan Tsai</strong>, Richard J Malak</p>
+            <p class="pub-venue">Journal of Mechanical Design · December 2022</p>
+            <div class="pub-links">
+              <a href="https://asmedigitalcollection.asme.org/mechanicaldesign/article-abstract/144/12/124501/1145716/Design-of-Approximate-Explicit-Model-Predictive" target="_blank" class="pub-link">Paper</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="pub-item" data-tag="optimization">
+          <div class="pub-media">
+            <img src="images/SciTech2022.png" alt="Surrogate modeling for sonic boom minimization in morphing aircraft" />
+          </div>
+          <div class="pub-body">
+            <div class="pub-meta">
+              <span class="pub-tag">Optimization</span>
+              <span class="pub-year">2022</span>
+            </div>
+            <h3 class="pub-title">Surrogate modeling and parametric optimization strategy for minimizing sonic boom in a morphing aircraft</h3>
+            <p class="pub-authors">Jonathan Weaver-Rosen, <strong>Ying-Kuan Tsai</strong>, Justin Schoppe, Yutaka Terada, Richard J Malak, Paul G Cizmas, David S Lazzara</p>
+            <p class="pub-venue">AIAA Scitech 2022 Forum · January 2022</p>
+            <div class="pub-links">
+              <a href="https://arc.aiaa.org/doi/abs/10.2514/6.2022-0097" target="_blank" class="pub-link">Paper</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- MORE PUBLICATIONS -->
+      <div class="more-pubs-cta">
+        <a href="publications-more.html" class="btn btn-primary">More Publications →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span class="footer-logo">DISO Lab</span>
+      <span class="footer-copy">© 2026 DISO Lab · Texas State University</span>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="https://scholar.google.com/citations?hl=en&authuser=3&user=FnJgFQEAAAAJ" target="_blank">Google Scholar</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
