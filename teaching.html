@@ -63,7 +63,21 @@
       </div>
 
       <h3 style="font-family: 'Lora', serif; font-size: 1.5rem; color: var(--ink); margin: 0 0 1.5rem;">Courses</h3>
-      <div class="research-grid">
+      <div class="research-list">
+
+        <div class="research-card">
+          <div class="teaching-header">
+            <span class="join-badge">MMIE 7312</span>
+            <span class="teaching-term">Spring 2027</span>
+          </div>
+          <h3>Digital Twins</h3>
+          <p class="teaching-role">Ph.D.-Level Course · Texas State University</p>
+          <p class="teaching-desc">This course introduces the foundations of digital twins for autonomous dynamic systems, with applications to robots and manufacturing systems.</p>
+          <ul class="teaching-topics">
+            <li><strong>Topics:</strong> probability and statistics, surrogate modeling (including system identification), machine learning and AI, optimization, control, and validation, verification, and uncertainty quantification (VVUQ).</li>
+            <li><strong>Project:</strong> TBD</li>
+          </ul>
+        </div>
 
         <div class="research-card">
           <div class="teaching-header">
@@ -71,40 +85,40 @@
             <span class="teaching-term">Fall 2026</span>
           </div>
           <h3>Control Systems</h3>
-          <p class="teaching-role">Mechanical Engineering · Texas State University</p>
+          <p class="teaching-role">Undergraduate Course · Texas State University</p>
           <p class="teaching-desc">This course covers introductory concepts of linear control systems.</p>
           <ul class="teaching-topics">
             <li><strong>Topics:</strong> block diagrams, mathematical modeling of physical systems, the Laplace transform, transfer functions, state-space representation, transient and steady state system responses, and stability.</li>
-            <li><strong>Project:</strong> TBD</li>
+            <li><strong>Project:</strong> Take an unstable inverted pendulum on a motor-driven cart from equations to a working controller: model it, analyze its stability, and design feedback controllers that keep it balanced.</li>
           </ul>
         </div>
 
         <div class="research-card">
           <div class="teaching-header">
             <span class="join-badge ug">MEEN 357</span>
-            <span class="teaching-term">Fall 2023</span>
+            <div class="term-tabs" role="tablist" aria-label="MEEN 357 semesters">
+              <button class="term-tab active" role="tab" aria-selected="true" data-term="fall2023">Fall 2023</button>
+              <button class="term-tab" role="tab" aria-selected="false" data-term="spring2023">Spring 2023</button>
+            </div>
           </div>
           <h3>Engineering Analysis for Mechanical Engineers</h3>
-          <p class="teaching-role">Undergraduate Course · Mechanical Engineering · Texas A&amp;M University</p>
-          <p class="teaching-desc">This course provides a practical foundation for the use of numerical methods to solve engineering problems.</p>
-          <ul class="teaching-topics">
-            <li><strong>Topics:</strong> solving systems of linear equations, curve fitting, root finding, numerical integration, numerical differentiation, initial value problems, boundary value problems, eigenvalues, and optimization methods.</li>
-            <li><strong>Project:</strong> Apply numerical methods and Python programming to model, simulate, and optimize an autonomous Mars rover capable of navigating challenging Martian terrain.</li>
-          </ul>
-        </div>
+          <p class="teaching-role">Undergraduate Course · Texas A&amp;M University</p>
 
-        <div class="research-card">
-          <div class="teaching-header">
-            <span class="join-badge ug">MEEN 357</span>
-            <span class="teaching-term">Spring 2023</span>
+          <div class="term-panel" data-term="fall2023" role="tabpanel">
+            <p class="teaching-desc">This course provides a practical foundation for the use of numerical methods to solve engineering problems.</p>
+            <ul class="teaching-topics">
+              <li><strong>Topics:</strong> solving systems of linear equations, curve fitting, root finding, numerical integration, numerical differentiation, initial value problems, boundary value problems, eigenvalues, and optimization methods.</li>
+              <li><strong>Project:</strong> Apply numerical methods and Python programming to model, simulate, and optimize an autonomous Mars rover capable of navigating challenging Martian terrain.</li>
+            </ul>
           </div>
-          <h3>Engineering Analysis for Mechanical Engineers</h3>
-          <p class="teaching-role">Undergraduate Course · Mechanical Engineering · Texas A&amp;M University</p>
-          <p class="teaching-desc">This course provides a practical foundation for the use of numerical methods to solve engineering problems.</p>
-          <ul class="teaching-topics">
-            <li><strong>Topics:</strong> solving systems of linear equations, curve fitting, root finding, numerical integration, numerical differentiation, initial value problems, boundary value problems, eigenvalues, and optimization methods.</li>
-            <li><strong>Project:</strong> Apply numerical methods and Python programming to model, simulate, and optimize an autonomous Mars rover capable of navigating challenging Martian terrain.</li>
-          </ul>
+
+          <div class="term-panel" data-term="spring2023" role="tabpanel" hidden>
+            <p class="teaching-desc">This course provides a practical foundation for the use of numerical methods to solve engineering problems.</p>
+            <ul class="teaching-topics">
+              <li><strong>Topics:</strong> solving systems of linear equations, curve fitting, root finding, numerical integration, numerical differentiation, initial value problems, boundary value problems, eigenvalues, and optimization methods.</li>
+              <li><strong>Project:</strong> Apply numerical methods and Python programming to model, simulate, and optimize an autonomous Mars rover capable of navigating challenging Martian terrain.</li>
+            </ul>
+          </div>
         </div>
 
       </div>

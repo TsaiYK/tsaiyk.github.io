@@ -41,6 +41,21 @@ function filterPubs(tag, btn) {
   });
 }
 
+// Semester tabs on course cards
+document.querySelectorAll('.term-tabs').forEach(tabs => {
+  const card = tabs.closest('.research-card');
+  tabs.querySelectorAll('.term-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.querySelectorAll('.term-tab').forEach(t => {
+        const on = t === tab;
+        t.classList.toggle('active', on);
+        t.setAttribute('aria-selected', on);
+        card.querySelector(`.term-panel[data-term="${t.dataset.term}"]`).hidden = !on;
+      });
+    });
+  });
+});
+
 // Contact form
 function handleForm(e) {
   e.preventDefault();
